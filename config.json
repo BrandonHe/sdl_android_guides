@@ -1,0 +1,21 @@
+{
+    "Authors": [
+        "Eric Schurter", "Joey Grover", "Corey Maylone"
+    ],
+    "languages": [
+        "en"
+    ],
+    "navigation": [
+        {
+            "name": "Getting Started"
+        },
+
+		{
+            "name": "Software Architecture"
+        },
+
+        {
+            "name": "All About Multiplexing"
+        }
+    ]
+}
