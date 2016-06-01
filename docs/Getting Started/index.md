@@ -54,9 +54,10 @@ Create a new service and name it appropriately, for this guide we are going to c
  
 ```java
 public class SdlService extends Service implements IProxyListenerALM {
-    // A whole bunch of Overrides
+    // Inherited methods from IProxyListenerALM
 }
 ```
+ The IProxyListenerALM interface has most of the callbacks you will receive during the the SDL proxy's lifecycle. This includes callbacks for RPC responses.
  
 If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be defined in the manifest:
 
@@ -70,8 +71,7 @@ If you created the service using the Android Studio template then the service sh
 
         <service
         android:name=".SdlService"
-        android:enabled="true"
-        android:exported="true" />
+        android:enabled="true"/>
     
     </application>
 
@@ -82,7 +82,7 @@ If you created the service using the Android Studio template then the service sh
 
 ### Implementing SDL Proxy Lifecycle
 
-In order to correctly use a proxy need to implement methods for the proper creation and disposing of an SDL Proxy in our SDLService.
+In order to correctly use a proxy developers need to implement methods for the proper creation and disposing of an SDL Proxy in our SDLService.
 
 !!! NOTE
 An instance of SdlProxy cannot be reused after it is closed and properly disposed of. Instead, a new instance must be created. Only one instance of SdlProxy should be in use at any given time.
@@ -102,7 +102,7 @@ public class SdlService extends Service implements IProxyListenerALM {
             try {
                 //Create a new proxy using Bluetooth transport
                 //The listener, app name, 
-                //wheather or not it is a media app and the applicationId are supplied.
+                //whether or not it is a media app and the applicationId are supplied.
                 proxy = new SdlProxyALM(this, "Hello SDL App", true, "8675309");
             } catch (SdlException e) {
                 //There was an error creating the proxy
@@ -148,7 +148,7 @@ public class SdlService extends Service implements IProxyListenerALM {
 }
 ```
 
-`onProxyClosed()` is called whenever the proxy detects some disconnect in the connection, whether initiated by the app, by SDL, or by the device’s Bluetooth connection. As long as the exception does not equal Sdl_PROXY_CYCLED or BLUETOOTH_DISABLED, the proxy would be reset for the exception SDL_PROXY_DISPOSED.
+`onProxyClosed()` is called whenever the proxy detects some disconnect in the connection, whether initiated by the app, by SDL, or by the device’s bluetooth connection. As long as the exception does not equal Sdl_PROXY_CYCLED or BLUETOOTH_DISABLED, the proxy would be reset for the exception SDL_PROXY_DISPOSED.
 
 !!! IMPORTANT
 We must properly dispose of our proxy in the `onDestory()` method because SDL will issue an error that it lost connection with the app if the connection fails before calling `proxy.displose()`.
@@ -156,14 +156,12 @@ We must properly dispose of our proxy in the `onDestory()` method because SDL wi
 
 ## SmartDeviceLink Broadcast Receiver
 
-The Android implementation of the SdlProxy relies heavily on the OS's Bluetooth intents. When the phone is connected to SDL, the app needs to create a SdlProxy, which publishes an SDP record for SDL to connect to. As mentioned previously, a SdlProxy cannot be re-used. When a disconnect between the app and SDL occurs, the current proxy must be disposed of and a new one created.
+The Android implementation of the SdlProxy relies heavily on the OS's bluetooth intents. When the phone is connected to SDL, the app needs to create a SdlProxy, which publishes an SDP record for SDL to connect to. As mentioned previously, a SdlProxy cannot be re-used. When a disconnect between the app and SDL occurs, the current proxy must be disposed of and a new one created.
 
 Create a new BroadcastReceiver and name it appropriately, for this guide we are going to call it `SdlBroadcastReceiver`:
 
 ```java
 public class SdlBroadcastReceiver extends BroadcastReceiver {
-    public SdlBroadcastReceiver() {
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -188,8 +186,7 @@ If you created the BroadcastReceiver using the Android Studio template then the 
 
         <receiver
             android:name=".SdlBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:enabled="true">
     
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
@@ -236,7 +233,7 @@ public class SdlBroadcastReceiver extends BroadcastReceiver {
 
 ### Main Activity
 
-Now that the basic connection infrastructure is in place, we should add methods to start the SDLService when our application starts. In `onCreate()` in your main activity, you need to add a method to start the SDL service so that the app is listening for a SDL connection in the case the app is installed while the device is already connected to SDL. (Thus, the app will not receive any Bluetooth events.) In our `MainActivity.java` we need to start the SDLService:
+Now that the basic connection infrastructure is in place, we should add methods to start the SdlService when our application starts. In `onCreate()` in your main activity, you need to add a method to start the SDL service so that the app is listening for a SDL connection in the case the app is installed while the device is already connected to SDL. (Thus, the app will not receive any Bluetooth events.) In our `MainActivity.java` we need to start the SDLService:
 
 ```java
 public class MainActivity extends Activity {
@@ -257,7 +254,7 @@ public class MainActivity extends Activity {
 
 #### onOnHMIStatus()
 
-In our `SDLService`, the `onONHMIStatus()` method is where you should control your application with SDL various [HMI Statuses](todo). When you receive the first [HMI_FULL](todo), you should initialize your app on SDL by subscribing to buttons, registering addcommands, sending an initial show or speak command, etc.
+In our `SdlService`, the `onONHMIStatus()` method is where you should control your application with SDL various [HMI Statuses](todo). When you receive the first [HMI_FULL](todo), you should initialize your app on SDL by subscribing to buttons, registering addcommands, sending an initial show or speak command, etc.
 
 ```java
 @Override
