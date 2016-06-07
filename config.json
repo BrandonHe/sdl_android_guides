@@ -10,12 +10,8 @@
             "name": "Getting Started"
         },
 
-		{
-            "name": "Software Architecture"
-        },
-
         {
-            "name": "All About Multiplexing"
+            "name": "Lockscreen"
         }
     ]
 }
