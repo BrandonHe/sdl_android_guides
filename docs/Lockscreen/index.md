@@ -1,6 +1,6 @@
 # Lock Screen
 
-In order for your SDL application to be certified with most OEMs; You will be required to implement a lock screen on the mobile device. The lock screen will disable user interactions with the application while they are using the head-unit to control application functionality.
+In order for your SDL application to be certified with most OEMs you will be required to implement a lock screen on the mobile device. The lock screen will disable user interactions with the application while they are using the head-unit to control application functionality.
 
 !!! NOTE
 This guide assumes that you have an SDL Service implemented as defined in the [Getting Started](/guides/android/getting-started/) guide.
@@ -8,8 +8,7 @@ This guide assumes that you have an SDL Service implemented as defined in the [G
 
 ## Lock Screen Activity
 
-First, we need to create a new activity that will host our lock screen. In the activity we add a simple [BroadcastReceiver](https://developer.android.com/reference/android/content/BroadcastReceiver.html) that listens for `CLOSE_LOCK_SCREEN` intents. The broadcast receiver will then call [finish()](https://developer.android.com/reference/android/app/Activity.html#finish()) in order to shutdown the activity:
-
+First, we need to create a new activity that will host our lock screen. In the activity we add a simple [BroadcastReceiver](https://developer.android.com/reference/android/content/BroadcastReceiver.html) that listens for `CLOSE_LOCK_SCREEN` intents. In the broadcast receiver we will then call [finish()](https://developer.android.com/reference/android/app/Activity.html#finish()) in order to shutdown the activity:
 
 ```java
 public class LockScreenActivity extends Activity {
@@ -88,7 +87,7 @@ In our AndroidManifest we need to define the style and launch mode for our lock 
 
 ## Updating SDL Service
 
-Now that our lock screen activity is setup, all we have to do is update our `SdlService` to utilize the LockScreenActivity. First, in the `onOnLockScreenNotification` we need to trigger the lockscreen to be displayed with the HMI Level is set to FULL and when the lock screen status is required:
+Now that our lock screen activity is setup, all we have to do is update our `SdlService` to utilize the LockScreenActivity. First, in the `onOnLockScreenNotification` we need to trigger the lock screen to be displayed with the HMI Level is set to FULL and when the lock screen status is required:
 
 ```java
 @Override
@@ -122,3 +121,5 @@ public void onDestroy() {
     super.onDestroy();
 }
 ```
+
+Now when the HMI displays the application the mobile device will display the lock screen.
