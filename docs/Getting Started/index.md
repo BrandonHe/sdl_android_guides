@@ -1,17 +1,30 @@
 
 # Installation
 
+#### Source
+
+Download the latest release from [GitHub](https://github.com/smartdevicelink/sdl_android/releases)
+
+Extract the source code from the archive
+
+Import the code in the `sdl_android_lib` folder as a module in Android Studio:
+
+1. Click `File` -> `New` -> `Import Module...` -> Choose the location of `sdl_android_lib` as your Source Directory
+2. The module name will automatically be set to `sdl_android_lib`, change this as desired. Click `Next` and then `Finish`
+
+The `sdl_android_lib` is now a module in your Android Studio project, but it needs to be added as a dependency to your application:
+
+1. Open your applications module settings by right clicking the application and selecting `Open Module Settings`
+2. Select the `Dependencies` tab
+3. Click the `+` button and select a `Module dependency`
+4. In the Choose Modules dialog select the `sdl_android_lib` module and click `OK`
+5. Click `OK` again and sync gradle
+
+
 #### Gradle
 
-We recommend using [Gradle](http://gradle.org/) for installation. To install the latest version add the following to your `build.gradle`:
+The SDL Android libraries are not yet available for download from jcenter
 
-```gradle
-dependencies {
-    compile 'com.smartdevicelink:sdl_android:4.0.1
-}
-```
-
-TODO Update this when SDL Android is in jcenter
 
 # Getting Started on Android
 
@@ -57,7 +70,7 @@ public class SdlService extends Service implements IProxyListenerALM {
     // Inherited methods from IProxyListenerALM
 }
 ```
- The IProxyListenerALM interface has most of the callbacks you will receive during the the SDL proxy's lifecycle. This includes callbacks for RPC responses.
+ The IProxyListenerALM interface has most of the callbacks you will receive during the SDL proxy's lifecycle. This includes callbacks for RPC responses.
  
 If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be defined in the manifest:
 
@@ -112,8 +125,6 @@ public class SdlService extends Service implements IProxyListenerALM {
                 }
             }
         }
-
-        mConnectionHandler.postDelayed(mCheckConnectionRunnable, CONNECTION_TIMEOUT);
 
         //use START_STICKY because we want the SDLService to be explicitly started and stopped as needed.
         return START_STICKY;
@@ -212,20 +223,16 @@ public class SdlBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        final BluetoothDevice bluetoothDevice = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-        // If the device is connected via bluetooth
-        if (intent.getAction().compareTo(BluetoothDevice.ACTION_ACL_CONNECTED) == 0) {
-            SdlService serviceInstance = SdlService.getInstance();
-            if (serviceInstance == null) {
-                // Start the SdlService which will start a proxy
+        switch (intent.getAction()) {
+            case BluetoothDevice.ACTION_ACL_CONNECTED:
                 Intent startIntent = new Intent(context, SdlService.class);
-                startIntent.putExtras(intent);
                 context.startService(startIntent);
-            }
-        }
-        else if (intent.getAction().equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
-            // signal your service to stop playback
+                break;
+            case BluetoothDevice.ACTION_ACL_DISCONNECTED:
+                break;
+            case AudioManager.ACTION_AUDIO_BECOMING_NOISY:
+                //stop audio playback
+                break;
         }
     }
 }
