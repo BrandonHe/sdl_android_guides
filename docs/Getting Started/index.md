@@ -21,7 +21,6 @@ dependencies {
 
 ```
 
-
 #### Gradle
 
 The SDL Android libraries are not yet available for download from jcenter
@@ -30,8 +29,6 @@ The SDL Android libraries are not yet available for download from jcenter
 # Getting Started on Android
 
 In this guide, we exclusively use Android Studio. We are going to set-up a bare-bones application so you get started using SDL.
-
-If you just want to jump right into the sample project, the source code can be downloaded [here](TODO)
 
 !!! IMPORTANT
 The SDL Mobile library for supports [Android 2.2.x (API Level 8)](https://developer.android.com/about/versions/android-2.2.html) or higher.
@@ -149,8 +146,6 @@ public class SdlService extends Service implements IProxyListenerALM {
     
     @Override
     public void onProxyClosed(String info, Exception e, SdlDisconnectedReason reason) {
-        //TODO Explain how best to handle onProxyClosed
-        
         //Stop the service
         stopSelf();
     }
@@ -262,7 +257,7 @@ public class MainActivity extends Activity {
 
 #### onOnHMIStatus()
 
-In our `SdlService`, the `onONHMIStatus()` method is where you should control your application with SDL various [HMI Statuses](todo). When you receive the first [HMI_FULL](todo), you should initialize your app on SDL by subscribing to buttons, registering addcommands, sending an initial show or speak command, etc.
+In our `SdlService`, the `onONHMIStatus()` method is where you should control your application with SDL various HMI Statuses. When you receive the first HMI_FULL, you should initialize your app on SDL by subscribing to buttons, registering addcommands, sending an initial show or speak command, etc.
 
 ```java
 @Override
