@@ -12,13 +12,14 @@ Import the code in the `sdl_android_lib` folder as a module in Android Studio:
 1. Click `File` -> `New` -> `Import Module...` -> Choose the location of `sdl_android_lib` as your Source Directory
 2. The module name will automatically be set to `sdl_android_lib`, change this as desired. Click `Next` and then `Finish`
 
-The `sdl_android_lib` is now a module in your Android Studio project, but it needs to be added as a dependency to your application:
+The `sdl_android_lib` is now a module in your Android Studio project, but it needs to be added as a dependency to your application. Add the following to the gradle dependencies of your project:
 
-1. Open your applications module settings by right clicking the application and selecting `Open Module Settings`
-2. Select the `Dependencies` tab
-3. Click the `+` button and select a `Module dependency`
-4. In the Choose Modules dialog select the `sdl_android_lib` module and click `OK`
-5. Click `OK` again and sync gradle
+```gradle
+dependencies {
+    compile project(path: ':sdl_android_lib')
+}
+
+```
 
 
 #### Gradle
