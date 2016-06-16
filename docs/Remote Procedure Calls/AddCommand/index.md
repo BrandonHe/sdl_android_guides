@@ -1,11 +1,13 @@
-# AddCommand #
+# AddCommand
 
 Adds a Command to the application's Command Menu.
 A Command will be added to the end of the list of elements in the Command Menu under the following conditions:
--	When a Command is added with no MenuParams value provided
+
+- When a Command is added with no MenuParams value provided
 - When a MenuParams value is provided with a MenuParam.position value greater than or equal to the number of menu items currently defined in the menu specified by the MenuParam.parentID value
 
 The set of choices which the application builds using AddCommand can be a mixture of:
+
 - Choices having only VR synonym definitions, but no MenuParams definitions
 - Choices having only MenuParams definitions, but no VR synonym definitions
 - Choices having both MenuParams and VR synonym definitions
@@ -33,11 +35,10 @@ There are a few other noteworthy consequences of MenuParams for a given command:
 - Commands that do not have vrCommands associated with them will not be accessible by voice commands (when the user hits push-to-talk).
 - Commands that do not have menuParams associated with them will not be accessible through the HMI application menu
 
-### HMI Status Requirements ###
+### HMI Status Requirements
 HMILevel needs to be FULL, LIMITED, or BACKGROUND.
 
-## Request ##
-
+## Request
 <b>Parameter List</b>
 <table border="1" rules="all">
  <tr>
@@ -82,30 +83,30 @@ HMILevel needs to be FULL, LIMITED, or BACKGROUND.
  </tr>
 </table>
 
-### Response ###
+### Response
 
 Indicates that the corresponding request has failed or succeeded, if the response returns with a SUCCESS result code, this means a command was added to the Command Menu successfully.
 
 Non-default Result Codes:
 
-    - SUCCESS
-    - INVALID_DATA
-    - OUT_OF_MEMORY
-    - TOO_MANY_PENDING_REQUESTS
-    - APPLICATION_NOT_REGISTERED
-    - GENERIC_ERROR
-    - REJECTED
-    - INVALID_ID
-    - DUPLICATE_NAME
-    - UNSUPPORTED_RESOURCE
-    - DISALLOWED
+- SUCCESS
+- INVALID_DATA
+- OUT_OF_MEMORY
+- TOO_MANY_PENDING_REQUESTS
+- APPLICATION_NOT_REGISTERED
+- GENERIC_ERROR
+- REJECTED
+- INVALID_ID
+- DUPLICATE_NAME
+- UNSUPPORTED_RESOURCE
+- DISALLOWED
 
-### Related Operations ###
+### Related Operations 
 - DeleteCommand
 - AddSubMenu
 - DeleteSubMenu
 
-### Example Function Call ###
+### Example Function Call 
 ```java
 commandReq = RPCRequestFactory.buildAddCommand(100, "Skip", new Vector<String>(Arrays.asList(new String[] {"Skip"})), autoIncCorrID++);
 _sdlProxy.sendRPCRequest(commandReq);
