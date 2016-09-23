@@ -161,12 +161,12 @@ public class SdlService extends Service implements IProxyListenerALM {
 `onProxyClosed()` is called whenever the proxy detects some disconnect in the connection, whether initiated by the app, by SDL, or by the device’s bluetooth connection. As long as the exception does not equal Sdl_PROXY_CYCLED or BLUETOOTH_DISABLED, the proxy would be reset for the exception SDL_PROXY_DISPOSED.
 
 !!! IMPORTANT
-We must properly dispose of our proxy in the `onDestory()` method because SDL will issue an error that it lost connection with the app if the connection fails before calling `proxy.displose()`.
+We must properly dispose of our proxy in the `onDestory()` method because SDL will issue an error that it lost connection with the app if the connection fails before calling `proxy.dispose()`.
 !!!
 
 ##SmartDeviceLink Router Service
 
-The SdlRouterService will listen for a bluetooth connection with an SDL enabled module. When a connection happens, it will alert all SDL enabled apps that a conneciton has been established and they should start their SDL services.
+The SdlRouterService will listen for a bluetooth connection with an SDL enabled module. When a connection happens, it will alert all SDL enabled apps that a connection has been established and they should start their SDL services.
 
 We must implement a local copy of the SdlRouterService into our project. The class doesn't need any modification, it's just important that we include it. We will extend the `com.smartdevicelink.transport.SdlRouterService` in our class named `SdlRouterService`:
 
@@ -203,7 +203,7 @@ If you created the service using the Android Studio template then the service sh
 ```
 
 !!! MUST
-The SdlRouterService must be placed in a seperate process with the name com.smartdevicelink.router. If it is not in that process during it's start up it will stop itself.
+The SdlRouterService must be placed in a separate process with the name com.smartdevicelink.router. If it is not in that process during it's start up it will stop itself.
 !!!
 
 ## SmartDeviceLink Broadcast Receiver
@@ -313,7 +313,7 @@ The `onSdlEnabled` method will be the main start point for our SDL connection se
 
 ### Main Activity
 
-Now that the basic connection infrastructure is in place, we should add methods to start the SdlService when our application starts. In `onCreate()` in your main activity, you need to call a method that will check to see if there is currently an SDL conneciton made. If there is one, the onSdlEnabled method will be called and we will follow the flow we alread set up. In our `MainActivity.java` we need to check for an SDL conneciton:
+Now that the basic connection infrastructure is in place, we should add methods to start the SdlService when our application starts. In `onCreate()` in your main activity, you need to call a method that will check to see if there is currently an SDL connection made. If there is one, the onSdlEnabled method will be called and we will follow the flow we already set up. In our `MainActivity.java` we need to check for an SDL connection:
 
 ```java
 public class MainActivity extends Activity {
