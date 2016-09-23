@@ -109,12 +109,13 @@ public class SdlService extends Service implements IProxyListenerALM {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        boolean forceConnect = intent !=null && intent.getBooleanExtra(TransportConstants.FORCE_TRANSPORT_CONNECTED, false);
         if (proxy == null) {
             try {
                 //Create a new proxy using Bluetooth transport
                 //The listener, app name, 
                 //whether or not it is a media app and the applicationId are supplied.
-                proxy = new SdlProxyALM(this, "Hello SDL App", true, "8675309");
+                proxy = new SdlProxyALM(this.getBaseContext(),this, "Hello SDL App", true, "8675309");
             } catch (SdlException e) {
                 //There was an error creating the proxy
                 if (proxy == null) {
@@ -122,7 +123,9 @@ public class SdlService extends Service implements IProxyListenerALM {
                     stopSelf();
                 }
             }
-        }
+        }else if(forceConnect){
+			proxy.forceOnConnected();
+		}
 
         //use START_STICKY because we want the SDLService to be explicitly started and stopped as needed.
         return START_STICKY;
@@ -161,27 +164,79 @@ public class SdlService extends Service implements IProxyListenerALM {
 We must properly dispose of our proxy in the `onDestory()` method because SDL will issue an error that it lost connection with the app if the connection fails before calling `proxy.displose()`.
 !!!
 
+##SmartDeviceLink Router Service
+
+The SdlRouterService will listen for a bluetooth connection with an SDL enabled module. When a connection happens, it will alert all SDL enabled apps that a conneciton has been established and they should start their SDL services.
+
+We must implement a local copy of the SdlRouterService into our project. The class doesn't need any modification, it's just important that we include it. We will extend the `com.smartdevicelink.transport.SdlRouterService` in our class named `SdlRouterService`:
+
+```Java
+public class SdlRouterService extends  com.smartdevicelink.transport.SdlRouterService {
+//Nothing to do here
+}
+```
+!!! MUST
+The local extension of the com.smartdevicelink.transport.SdlRouterService must be named SdlRouterService. 
+!!!
+
+If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Once added, the service needs to be defined like below:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.company.mySdlApplication">
+
+    <application>
+    
+    ...
+
+        <service
+        android:name="com.company.mySdlApplication.SdlRouterService"
+            android:exported="true" 
+             android:process="com.smartdevicelink.router">
+        </service>
+    
+    </application>
+
+    ...
+
+</manifest>
+```
+
+!!! MUST
+The SdlRouterService must be placed in a seperate process with the name com.smartdevicelink.router. If it is not in that process during it's start up it will stop itself.
+!!!
+
 ## SmartDeviceLink Broadcast Receiver
 
 The Android implementation of the SdlProxy relies heavily on the OS's bluetooth intents. When the phone is connected to SDL, the app needs to create a SdlProxy, which publishes an SDP record for SDL to connect to. As mentioned previously, a SdlProxy cannot be re-used. When a disconnect between the app and SDL occurs, the current proxy must be disposed of and a new one created.
 
-Create a new BroadcastReceiver and name it appropriately, for this guide we are going to call it `SdlBroadcastReceiver`:
+The SDL Android library has a custom broadcast receiver named `SdlBroadcastReceiver` that should be used as the base for your BroadcastReceiver. It is a child class of Android's BroadcastReceiver so all normal flow and attributes will be available. Two abstract methods will be automatically populate the class, we will fill them out soon.
+
+Create a new SdlBroadcastReceiver and name it appropriately, for this guide we are going to call it `SdlReceiver`:
 
 ```java
-public class SdlBroadcastReceiver extends BroadcastReceiver {
+public class SdlReceiver extends SdlBroadcastReceiver {
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        // ...
-    }
+      	@Override
+	public void onSdlEnabled(Context context, Intent intent) {
+		//...
+		
+	}
+
+
+	@Override
+	public Class<? extends SdlRouterService> defineLocalSdlRouterClass() {
+        //...
+	}
 }
 ```
 
-If you created the BroadcastReceiver using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the receiver needs to be defined in the manifest. Regardless, the manifest needs to be edited so that the `SdlBroadcastReceiver` only needs to respond to the following intents:
+If you created the BroadcastReceiver using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the receiver needs to be defined in the manifest. Regardless, the manifest needs to be edited so that the `SdlBroadcastReceiver` needs to respond to the following intents:
 
 * [android.bluetooth.device.action.ACL_CONNECTED](https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#ACTION_ACL_CONNECTED)
 * [android.bluetooth.device.action.ACL_DISCONNECTED](https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#ACTION_ACL_DISCONNECTED)
 * [android.media.AUDIO_BECOMING_NOISY](https://developer.android.com/reference/android/media/AudioManager.html#ACTION_AUDIO_BECOMING_NOISY)
+* sdl.router.startservice
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -199,6 +254,7 @@ If you created the BroadcastReceiver using the Android Studio template then the 
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED"/>
                 <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+                <action android:name="sdl.router.startservice" />
             </intent-filter>
     
         </receiver>
@@ -209,34 +265,55 @@ If you created the BroadcastReceiver using the Android Studio template then the 
 
 </manifest>
 ```
+!!! NOTE
+The intent `sdl.router.startservice` is a custom intent that will come from the SdlRouterService to tell us that we have just connected to an SDL enabled piece of hardware!!!
 
-We want to start the SDL Proxy when a phone is connected via bluetooth. We do this by responding to the [android.bluetooth.device.action.ACL_CONNECTED](https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#ACTION_ACL_CONNECTED) intent:
+Next, we want to make sure we supply our instance of the SdlBroadcastService with our local copy of the SdlRouterService. We do this by simply returning the class object in the method defineLocalSdlRouterClass:
 
 ```java
 public class SdlBroadcastReceiver extends BroadcastReceiver {
-    public SdlBroadcastReceiver() {
-    }
+          	@Override
+	public void onSdlEnabled(Context context, Intent intent) {
+		//..
+	}
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        switch (intent.getAction()) {
-            case BluetoothDevice.ACTION_ACL_CONNECTED:
-                Intent startIntent = new Intent(context, SdlService.class);
-                context.startService(startIntent);
-                break;
-            case BluetoothDevice.ACTION_ACL_DISCONNECTED:
-                break;
-            case AudioManager.ACTION_AUDIO_BECOMING_NOISY:
-                //stop audio playback
-                break;
-        }
-    }
+	@Override
+	public Class<? extends SdlRouterService> defineLocalSdlRouterClass() {
+        //Return a local copy of the SdlRouterService located in your project
+		return com.company.mySdlApplication.SdlRouterService.class;
+	}
 }
 ```
 
+
+We want to start the SDL Proxy when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the onSdlEnabled method:
+
+```java
+public class SdlBroadcastReceiver extends BroadcastReceiver {
+   
+   @Override
+	public void onSdlEnabled(Context context, Intent intent) {
+		//Use the provided intent but set the class to the SdlService
+		intent.setClass(context, SdlService.class);
+		context.startService(intent);
+		
+	}
+
+
+	@Override
+	public Class<? extends SdlRouterService> defineLocalSdlRouterClass() {
+        //Return a local copy of the SdlRouterService located in your project
+		return com.company.mySdlApplication.SdlRouterService.class;
+	}
+}
+```
+!!! IMPORTANT
+The `onSdlEnabled` method will be the main start point for our SDL connection session. We define exactly what we want to happen when we find out we are connected to SDL enabled hardware.
+!!!
+
 ### Main Activity
 
-Now that the basic connection infrastructure is in place, we should add methods to start the SdlService when our application starts. In `onCreate()` in your main activity, you need to add a method to start the SDL service so that the app is listening for a SDL connection in the case the app is installed while the device is already connected to SDL. (Thus, the app will not receive any Bluetooth events.) In our `MainActivity.java` we need to start the SDLService:
+Now that the basic connection infrastructure is in place, we should add methods to start the SdlService when our application starts. In `onCreate()` in your main activity, you need to call a method that will check to see if there is currently an SDL conneciton made. If there is one, the onSdlEnabled method will be called and we will follow the flow we alread set up. In our `MainActivity.java` we need to check for an SDL conneciton:
 
 ```java
 public class MainActivity extends Activity {
@@ -246,9 +323,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Start the SDLService
-        Intent sdlServiceIntent = new Intent(this, SdlService.class);
-        startService(sdlServiceIntent);
+        //If we are connected to a module we want to start our SdlService
+		SdlReceiver.queryForConnectedService(this);
     }
 }
 ```
