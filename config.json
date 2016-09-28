@@ -7,7 +7,12 @@
     ],
     "navigation": [
         {
-            "name": "Getting Started"
+            "name": "Getting Started",
+            "navigation": [
+                {
+                    "name": "Upgrading to Multiplexing"
+                }
+            ]
         },
 
         {
