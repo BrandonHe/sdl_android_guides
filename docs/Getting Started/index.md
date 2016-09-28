@@ -170,6 +170,10 @@ The SdlRouterService will listen for a bluetooth connection with an SDL enabled 
 
 We must implement a local copy of the SdlRouterService into our project. The class doesn't need any modification, it's just important that we include it. We will extend the `com.smartdevicelink.transport.SdlRouterService` in our class named `SdlRouterService`:
 
+!!! NOTE
+Do not include an import for `com.smartdevicelink.transport.SdlRouterService`. Otherwise, we will get an error for `'SdlRouterService' is already defined in this compilation unit`.
+!!!
+
 ```Java
 public class SdlRouterService extends  com.smartdevicelink.transport.SdlRouterService {
 //Nothing to do here
