@@ -180,7 +180,7 @@ public class SdlRouterService extends  com.smartdevicelink.transport.SdlRouterSe
 }
 ```
 !!! MUST
-The local extension of the com.smartdevicelink.transport.SdlRouterService must be named SdlRouterService. 
+The local extension of the `com.smartdevicelink.transport.SdlRouterService` must be named `SdlRouterService`. 
 !!!
 
 If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Once added, the service needs to be defined like below:
@@ -194,9 +194,9 @@ If you created the service using the Android Studio template then the service sh
     ...
 
         <service
-        android:name="com.company.mySdlApplication.SdlRouterService"
-            android:exported="true" 
-            android:process="com.smartdevicelink.router">
+        	android:name="com.company.mySdlApplication.SdlRouterService"
+        	android:exported="true" 
+        	android:process="com.smartdevicelink.router">
         </service>
     
     </application>
@@ -207,7 +207,7 @@ If you created the service using the Android Studio template then the service sh
 ```
 
 !!! MUST
-The SdlRouterService must be placed in a separate process with the name com.smartdevicelink.router. If it is not in that process during it's start up it will stop itself.
+The `SdlRouterService` must be placed in a separate process with the name `com.smartdevicelink.router`. If it is not in that process during it's start up it will stop itself.
 !!!
 
 ## SmartDeviceLink Broadcast Receiver
