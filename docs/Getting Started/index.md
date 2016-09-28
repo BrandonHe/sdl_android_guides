@@ -196,7 +196,7 @@ If you created the service using the Android Studio template then the service sh
         <service
         android:name="com.company.mySdlApplication.SdlRouterService"
             android:exported="true" 
-             android:process="com.smartdevicelink.router">
+            android:process="com.smartdevicelink.router">
         </service>
     
     </application>
@@ -252,6 +252,7 @@ If you created the BroadcastReceiver using the Android Studio template then the 
 
         <receiver
             android:name=".SdlBroadcastReceiver"
+            android:exported="true"
             android:enabled="true">
     
             <intent-filter>
