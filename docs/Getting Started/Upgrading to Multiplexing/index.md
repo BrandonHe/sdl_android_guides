@@ -170,8 +170,9 @@ The `onSdlEnabled` method will be the main start point for our SDL connection se
 !!!
 
 
-Now we need to add an extra intent action or our intent filter for the SdlBroadcastReceiver:
+Now we need to add two extra intent actions to or our intent filter for the SdlBroadcastReceiver:
 
+* [android.bluetooth.adapter.action.STATE_CHANGED](https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#ACTION_CONNECTION_STATE_CHANGED)
 * <b>sdl.router.startservice</b>
 
 ```xml
@@ -190,6 +191,7 @@ Now we need to add an extra intent action or our intent filter for the SdlBroadc
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED"/>
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
                 <action android:name="android.media.AUDIO_BECOMING_NOISY" />
                 <action android:name="sdl.router.startservice" />
             </intent-filter>
