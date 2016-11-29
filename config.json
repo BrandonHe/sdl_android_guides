@@ -14,11 +14,35 @@
                 }
             ]
         },
-
+       
+        {
+            "name": "Basics",
+            "navigation": [
+                {
+                    "name": "Displaying Information"
+                },
+                {
+                    "name": "Uploading Graphics"
+                }
+            ]
+        },
+       
         {
             "name": "Lockscreen"
         },
-
+        
+        {
+            "name": "Advanced Topics",
+            "navigation": [
+                {
+                    "name": "Calling A Phone Number"
+                },
+                {
+                    "name": "Setting the Navigation Destination"
+                }
+            ]
+        },
+        
         {
             "name": "Remote Procedure Calls",
             "navigation": [
