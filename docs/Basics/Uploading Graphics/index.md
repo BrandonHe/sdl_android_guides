@@ -4,7 +4,9 @@ Images are a great way to help create a great user experience. SDL allows a deve
 
 The position and size of images on the screen is determined by the currently set template. All images must first be uploaded to the SDL Module using the PutFiles  before being used in a Show RPC to then have the images be displayed. Once the image has been successfully uploaded, the app will be notified by the SDL Module.
 
-!!! NOTE Some head units you may be connected to may not support images at all. Please consult the graphicsSupported property in the display capabilities property of the RegisterAppInterface response. !!!
+!!! NOTE 
+Some head units you may be connected to may not support images at all. Please consult the graphicsSupported property in the display capabilities property of the RegisterAppInterface response. 
+!!!
 
 ###Image File Type
 
