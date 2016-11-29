@@ -14,7 +14,9 @@ Images may be formatted as PNG, JPEG, or BMP. Check the displayCapability proper
 
 The image name is a unique id for that image uploaded.
 
-!!! NOTE The image name can only consist of letters (a-Z) and numbers (0-9), otherwise the SDL Core may fail to find the uploaded image (even if it was uploaded successfully). !!!
+!!! NOTE 
+The image name can only consist of letters (a-Z) and numbers (0-9), otherwise the SDL Core may fail to find the uploaded image (even if it was uploaded successfully). 
+!!!
 
 ##Send the PutFile
 
