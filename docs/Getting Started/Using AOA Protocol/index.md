@@ -1,4 +1,4 @@
-#Incorporating Android Open Accessory Protocol
+#Using Android Open Accessory Protocol
 Incorporating AOA into an SDL-enabled app allows it to communicate to a module over USB. This guide will assume the SDL library is already integrated into the app.
 
 We will make changes to: 
