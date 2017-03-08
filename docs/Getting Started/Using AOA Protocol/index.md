@@ -10,7 +10,9 @@ We will make changes to:
 ##Android Manifest
 To use the AOA protocol, you must specify so in your app's Manifest with:
 
-```<uses-feature android:name="android.hardware.usb.accessory"/>```
+```xml
+<uses-feature android:name="android.hardware.usb.accessory"/>
+```
 
 !!! MUST
 This feature will not work without including this line!
@@ -18,7 +20,7 @@ This feature will not work without including this line!
 
 Additionally, the SDL Android library houses a USBAccessoryAttachmentActivity that you need to add between your Manifest's `<application>…</application>` tags:
 
-```
+```xml
 <activity android:name="com.smartdevicelink.transport.USBAccessoryAttachmentActivity"
 	android:launchMode="singleTop">
 	<intent-filter>
@@ -34,7 +36,7 @@ Additionally, the SDL Android library houses a USBAccessoryAttachmentActivity th
 ##Accessory Filter (New)
 For security purposes, an accessory filter will limit accessory connections to those included in the filter. Add the directory /res/xml to your project and create a new XML file `accessory_filter` inside of it. Add in the following to `accessory_filter`:
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resource>
     <usb-accessory
@@ -49,7 +51,7 @@ When using AOA, the USB Transport instantiation is dependent on an accessory dev
 
 AOA is only supported on devices with API level 12 or higher. You can check for this with:
 
-```
+```java
 if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB){
 	// create USB transport
 }else{
@@ -63,7 +65,7 @@ It's recommended to either check for an API level 12 or higher here or specify a
 
 You also need to check that the intent that started your service has an Extra equal to `UsbManager.EXTRA_ACCESSORY`:
 
-```
+```java
 if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB){
 	if(intent!=null && intent.hasExtra(UsbManager.EXTRA_ACCESSORY)) {
 		// create USB transport	
@@ -75,13 +77,13 @@ if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB){
 
 Finally, we can create a new USBTransport with:
 
-```
+```java
 transport = new USBTransportConfig(getBaseContext(), (UsbAccessory) intent.getParcelableExtra(UsbManager.EXTRA_ACCESSORY), false, false);
 ```
 
 And our final result is:
 
-```
+```java
 public int onStartCommand(Intent intent, int flags, int startId) {
         boolean forceConnect = intent !=null && intent.getBooleanExtra(TransportConstants.FORCE_TRANSPORT_CONNECTED, false);
         if (proxy == null) {
