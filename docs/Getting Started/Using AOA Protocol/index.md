@@ -13,7 +13,7 @@ To use the AOA protocol, you must specify so in your app's Manifest with:
 ```<uses-feature android:name="android.hardware.usb.accessory"/>```
 
 !!! MUST
-	This feature will not work without including this line!
+This feature will not work without including this line!
 !!!
 
 Additionally, the SDL Android library houses a USBAccessoryAttachmentActivity that you need to add between your Manifest's `<application>…</application>` tags:
@@ -58,7 +58,7 @@ if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB){
 ```
 
 !!! NOTE
-	It's recommended to either check for an API level 12 or higher here or specify an API level 12 or higher in your app's Manifest.
+It's recommended to either check for an API level 12 or higher here or specify an API level 12 or higher in your app's Manifest.
 !!!
 
 You also need to check that the intent that started your service has an Extra equal to `UsbManager.EXTRA_ACCESSORY`:
