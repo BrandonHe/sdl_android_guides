@@ -47,7 +47,7 @@ For security purposes, an accessory filter will limit accessory connections to t
 ##SmartDeviceLink Service
 When using AOA, the USB Transport instantiation is dependent on an accessory device actually being connected. The following changes need to be made in the `onStartCommand()` function of your SdlService.
 
-AOA is only supported on devices with API level 12 or higher. It's reccommended to check for this with:
+AOA is only supported on devices with API level 12 or higher. You can check for this with:
 
 ```
 if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB){
@@ -56,8 +56,9 @@ if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB){
    Log.e("SdlService", "Unable to start proxy. Android OS version is too low"); // optional
 }
 ```
+
 !!! NOTE
-	It's reccommended to check for an API level 12 or higher here or specify an API level 12 or higher in your app's Manifest.
+	It's recommended to either check for an API level 12 or higher here or specify an API level 12 or higher in your app's Manifest.
 !!!
 
 You also need to check that the intent that started your service has an Extra equal to `UsbManager.EXTRA_ACCESSORY`:
