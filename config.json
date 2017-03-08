@@ -1,6 +1,6 @@
 {
     "Authors": [
-        "Joey Grover", "Corey Maylone"
+        "Joey Grover", "Corey Maylone", "Austin Kirk"
     ],
     "languages": [
         "en"
@@ -10,7 +10,10 @@
             "name": "Getting Started",
             "navigation": [
                 {
-                    "name": "Upgrading to Multiplexing"
+                    "name" : "Upgrading to Multiplexing"
+                },
+                {
+                    "name" : "Using AOA Protocol"
                 }
             ]
         },
