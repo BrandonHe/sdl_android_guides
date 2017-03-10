@@ -18,7 +18,7 @@ To use the AOA protocol, you must specify so in your app's Manifest with:
 This feature will not work without including this line!
 !!!
 
-Additionally, the SDL Android library houses a USBAccessoryAttachmentActivity that you need to add between your Manifest's `<application>…</application>` tags:
+The SDL Android library houses a USBAccessoryAttachmentActivity that you need to add between your Manifest's `<application>…</application>` tags:
 
 ```xml
 <activity android:name="com.smartdevicelink.transport.USBAccessoryAttachmentActivity"
@@ -31,6 +31,16 @@ Additionally, the SDL Android library houses a USBAccessoryAttachmentActivity th
 		android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
 		android:resource="@xml/accessory_filter" />
 </activity>
+```
+
+Lastly, your project's local SdlBroadcastReceiver needs an intent filter for `com.smartdevicelink.USB_ACCESSORY_ATTACHED`. 
+
+```xml
+<receiver android:name="com.domain.yourapp.SdlReceiver" >
+	<intent-filter>
+   		<action android:name="com.smartdevicelink.USB_ACCESSORY_ATTACHED"/>
+	</intent-filter>
+</receiver>
 ```
 
 ##Accessory Filter (New)
