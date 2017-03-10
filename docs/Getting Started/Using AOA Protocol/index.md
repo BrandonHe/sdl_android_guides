@@ -1,10 +1,9 @@
 #Using Android Open Accessory Protocol
-Incorporating AOA into an SDL-enabled app allows it to communicate to a module over USB. This guide will assume the SDL library is already integrated into the app. This guide also requires you to have implement a local SdlBroadcastReceiver and SdlRouterService as outlined in the Bluetooth Multiplexing documentation.
+Incorporating AOA into an SDL-enabled app allows it to communicate to a module over USB. This guide will assume the SDL library is already integrated into the app. This guide also requires you to have implement a local `SdlBroadcastReceiver` as outlined in the Bluetooth Multiplexing documentation.
 
 Prerequisites:
 
 * SdlReceiver
-* SdlRouterService
 
 
 We will add or make changes to: 
@@ -17,25 +16,28 @@ We will add or make changes to:
 If you have already implemented the Multiplexing guidelines in your project, feel free to skip this section.
 
 ###SdlReceiver
-Create your own SdlReceiver that extends SdlBroadcastReceiver and implement the following:
+Create your own `SdlReceiver` that extends `SdlBroadcastReceiver` and implement the following:
 
 ```java
 public class SdlReceiver extends com.smartdevicelink.SdlBroadcastReceiver {
 
     @Override
     public void onSdlEnabled(Context context, Intent intent) {
-        //Use the provided intent but set the class to the SdlService
+        //Use the provided intent but set the class to your SdlService
         intent.setClass(context, SdlService.class);
         context.startService(intent);
-
     }
-
 
     @Override
     public Class<? extends SdlRouterService> defineLocalSdlRouterClass() {
-        //Return a local copy of the SdlRouterService located in your project. 
-        return com.company.mySdlApplication.SdlRouterService.class;
+        return null; //Since we use AOA, we will not be using multiplexing
     }
+    
+    @Override
+    public void onReceive(Context context, Intent intent){
+        super.onReceive(context, intent);
+        //Your code
+	}
 }
 ```
 
@@ -47,24 +49,10 @@ and add the Receiver to your app's Android Manifest with the following intent fi
 			android:enabled="true" >
 			
 	<intent-filter>
-   		<action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
-		<action android:name="android.bluetooth.device.action.ACL_DISCONNECTED"/>
-		<action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
-		<action android:name="android.media.AUDIO_BECOMING_NOISY" />
 		<action android:name="sdl.router.startservice" />
 	</intent-filter>
 	
 </receiver>
-```
-
-###SdlRouterService
-
-Add the following class to your project:
-
-```java
-public class SdlRouterService extends  com.smartdevicelink.transport.SdlRouterService {
-	// Leave blank
-}
 ```
 
 ##Android Manifest
@@ -99,21 +87,15 @@ For AOA, your project's local SdlReceiver needs an intent filter for `com.smartd
 <receiver android:name="com.company.mySdlApplication.SdlReceiver"
 			android:exported="true"
 			android:enabled="true" >
-			
-	<intent-filter>
-   		<action android:name="com.smartdevicelink.USB_ACCESSORY_ATTACHED"/> <!--For AOA -->
-   		
-   		<action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
-		<action android:name="android.bluetooth.device.action.ACL_DISCONNECTED"/>
-		<action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
-		<action android:name="android.media.AUDIO_BECOMING_NOISY" />
-		<action android:name="sdl.router.startservice" />	</intent-filter>
-	
+    <intent-filter>
+        <action android:name="com.smartdevicelink.USB_ACCESSORY_ATTACHED"/> <!--For AOA -->
+        <action android:name="sdl.router.startservice" />
+    </intent-filter>
 </receiver>
 ```
 
 ##Accessory Filter (New)
-For security purposes, an accessory filter will limit accessory connections to those included in the filter. Add the directory /res/xml to your project and create a new XML file `accessory_filter` inside of it. Add in the following to `accessory_filter`:
+For security purposes, an accessory filter will limit accessory connections to those included in the filter. Add the directory `/res/xml` to your project and create a new XML file `accessory_filter.xml` inside of it. Add in the following to `accessory_filter.xml`:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
