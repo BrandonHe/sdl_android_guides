@@ -1,5 +1,5 @@
 #Using Android Open Accessory Protocol
-Incorporating AOA into an SDL-enabled app allows it to communicate to a module over USB. This guide will assume the SDL library is already integrated into the app.
+Incorporating AOA into an SDL-enabled app allows it to communicate to a module over USB. This guide will assume the SDL library is already integrated into the app. This guide also requires you to have implemented a local SdlBroadcastReceiver as outlined in the Bluetooth Multiplexing documentation.
 
 We will make changes to: 
 
@@ -33,7 +33,7 @@ The SDL Android library houses a USBAccessoryAttachmentActivity that you need to
 </activity>
 ```
 
-Lastly, your project's local SdlBroadcastReceiver needs an intent filter for `com.smartdevicelink.USB_ACCESSORY_ATTACHED`. 
+If you haven't already, implement a local SdlBroadcastReceiver in your project as outlined in the Bluetooth Multiplexing documentation. For AOA, your project's local SdlBroadcastReceiver needs an intent filter for `com.smartdevicelink.USB_ACCESSORY_ATTACHED`. 
 
 ```xml
 <receiver android:name="com.domain.yourapp.SdlReceiver" >
