@@ -48,7 +48,7 @@ vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
 	public void onResponse(int correlationId, RPCResponse response) {
 		if(response.getSuccess()){
 			PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
-			Log.i("SdlService", "PRNDL status: " prndl.toString());
+			Log.i("SdlService", "PRNDL status: " + prndl.toString());
 		}else{
 			Log.i("SdlService", "GetVehicleData was rejected.");
 		}
