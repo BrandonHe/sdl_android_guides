@@ -19,6 +19,24 @@
         },
 
         {
+            "name": "Displaying Information",
+            "navigation": [
+                {
+                    "name" : "Designing the User Interface"
+                },
+                {
+                    "name" : "Text Images and Buttons"
+                },
+                {
+                    "name" : "Menus"
+                },
+                {
+                    "name" : "Alerts"
+                }
+            ]
+        },
+
+        {
             "name": "Lockscreen"
         },
 
