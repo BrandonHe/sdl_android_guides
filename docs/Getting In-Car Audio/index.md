@@ -1,0 +1,102 @@
+## Getting In-Car Audio
+
+Capturing in-car audio allows developers to interact with users via raw audio data provided to them from the car's microphones. In order to gather the raw audio from the vehicle, we must leverage the `PerformAudioPassThru` RPC.
+
+!!! note
+PerformAudioPassThru does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement.
+!!!
+
+### Starting Audio Capture
+To initiate audio capture, we must construct a `PerformAudioPassThru` object. The properties we will set in this object's constructor relate to how we wish to gather the audio data from the vehicle we are connected to.
+
+```java
+PerformAudioPassThru performAPT = new PerformAudioPassThru();
+performAPT.setAudioPassThruDisplayText1("Ask me \"What's the weather?\"");
+performAPT.setAudioPassThruDisplayText2("or \"What's 1 + 2?\"");
+
+performAPT.setInitialPrompt(TTSChunkFactory
+        .createSimpleTTSChunks("Ask me What's the weather? or What's 1 plus 2?"));
+performAPT.setSamplingRate(SamplingRate._22KHZ);
+performAPT.setMaxDuration(7000);
+performAPT.setBitsPerSample(BitsPerSample._16_BIT);
+performAPT.setAudioType(AudioType.PCM);
+performAPT.setMuteAudio(false);
+performAPT.setCorrelationID(CorrelationIdGenerator.generateId());
+
+proxy.sendRPCRequest(performAPT);
+```
+
+#### Ford HMI
+![Ford Audio Pass Thru](assets/Ford_AudioPassThruPrompt.png)
+
+In order to know the currently supported audio capture capabilities of the connected head unit, please refer to the `SdlProxyALM` object created when your SDL Service starts. It contains a method `getAudioPassThruCapabilities` that returns a list of `AudioPassThruCapabilities` that the head unit supports.
+
+!!! note
+Currently, Ford's SYNC 3 vehicles only support Sampling Rates of 16 khz and Bit Rates of 16 bit.
+!!!
+
+### Gathering Audio Data
+
+SDL provides audio data as fast as it can gather it, and sends it to the developer in chunks. In order to retrieve this audio data, observe the `OnAudioPassThru` notification in the `onOnAudioPassThru` callback of your Sdl Service:
+
+```java
+@Override
+public void onOnAudioPassThru(OnAudioPassThru notification) {
+
+    byte[] dataRcvd;
+    dataRcvd = notification.getAPTData();
+
+    processAPTData(dataRcvd); // Do something with audio data
+}
+```
+
+!!! note
+This audio data is only the current audio data, so the developer must be in charge of managing previously retrieved audio data.
+!!!
+
+
+### Ending Audio Capture
+Perform Audio Pass Thru is a request that works in a different way when compared to other RPCs. For most RPCs, and request is followed by an immediate response, with whether that RPC was successful or not. This RPC, however, will only send out the response when the Perform Audio Pass Thru is ended.
+
+Audio Capture can be ended in 4 ways:
+
+1. Audio Pass Thru has timed out.
+
+    If the audio passthrough has proceeded longer than the requested timeout duration, Core will end this request and send a `PerformAudioPassThruResponse` with a `Result` of `SUCCESS`. You should expect to handle this audio passthrough as though it was successful.
+
+2. Audio Pass Thru was closed due to user pressing "Cancel".
+
+    If the audio passthrough was displayed, and the user pressed the "Cancel" button, you will receive a `PerformAudioPassThruResponse` with a `Result` of `ABORTED`. You should expect to ignore this audio pass through.
+
+3. Audio Pass Thru was closed due to user pressing "Done".
+
+    If the audio passthrough was displayed, and the user pressed the "Done" button, you will receive a `PerformAudioPassThruResponse` with a `Result` of `SUCCESS`. You should expect to handle this audio passthrough as though it was successful.
+
+4. Audio Pass Thru was ended due to the developer ending the request.
+
+    If the audio passthrough was displayed, but you have established on your own that you no longer need to capture audio data, you can send an `EndAudioPassThru` RPC.
+
+```java
+EndAudioPassThru endAPT = new EndAudioPassThru();
+endAPT.setCorrelationID(CorrelationIdGenerator.generateId());
+proxy.sendRPCRequest(endAPT);
+```
+
+You will receive a `EndAudioPassThruResponse` and `PerformAudioPassThruResponse` with a `Result` of `SUCCESS`, and should expect to handle this audio passthrough as though it was successful.
+
+### Handling the Response
+To process the response that we received from an ended audio capture, we monitor the `PerformAudioPassThruResponse` through the callback in the Sdl Service.
+
+```java
+@Override
+public void onPerformAudioPassThruResponse(PerformAudioPassThruResponse response) {
+    Result result = response.getResultCode();
+
+    if(result.equals(Result.SUCCESS)){
+        // We can use the data
+    }else{
+        // Cancel any usage of the data
+        Log.e("SdlService", "Audio pass thru attempt failed.");
+    }
+}
+```
