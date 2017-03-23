@@ -27,6 +27,10 @@
         },
 
         {
+            "name": "Setting the Navigation Destination"
+        },
+
+        {
             "name": "Remote Procedure Calls",
             "navigation": [
                 {
