@@ -8,11 +8,12 @@ This guide assumes that you have an SDL Service implemented as defined in the [G
 
 ## Lock Screen Activity
 
-First, we need to create a new activity that will host our lock screen. In the activity we add a simple [BroadcastReceiver](https://developer.android.com/reference/android/content/BroadcastReceiver.html) that listens for `CLOSE_LOCK_SCREEN` intents. In the broadcast receiver we will then call [finish()](https://developer.android.com/reference/android/app/Activity.html#finish()) in order to shutdown the activity. We also check for a Bitmap extra, `LOCKSCREEN_BITMAP_EXTRA`, in the intent that started the activity:
+First, we need to create a new activity that will host our lock screen. In the activity we add a simple [BroadcastReceiver](https://developer.android.com/reference/android/content/BroadcastReceiver.html) that listens for `CLOSE_LOCK_SCREEN_ACTION` intents. In the broadcast receiver we will then call [finish()](https://developer.android.com/reference/android/app/Activity.html#finish()) in order to shutdown the activity. We also check for a Bitmap extra, `LOCKSCREEN_BITMAP_EXTRA`, in the intent that started the activity:
 
 ```java
 public class LockScreenActivity extends Activity {
     public static final String LOCKSCREEN_BITMAP_EXTRA = "LOCKSCREEN_BITMAP_EXTRA";
+    public static final String CLOSE_LOCK_SCREEN_ACTION = "CLOSE_LOCK_SCREEN";
 
     private final BroadcastReceiver closeLockScreenBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -25,7 +26,7 @@ public class LockScreenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        registerReceiver(closeLockScreenBroadcastReceiver, new IntentFilter("CLOSE_LOCK_SCREEN"));
+        registerReceiver(closeLockScreenBroadcastReceiver, new IntentFilter(CLOSE_LOCK_SCREEN_ACTION));
 
         setContentView(R.layout.activity_lock_screen);
 
@@ -145,7 +146,7 @@ public void onOnLockScreenNotification(OnLockScreenStatus notification) {
 			}
 			startActivity(showLockScreenIntent);
 		}else if(notification.getShowLockScreen() == LockScreenStatus.OFF){
-			sendBroadcast(new Intent("CLOSE_LOCK_SCREEN"));
+			sendBroadcast(new Intent(LockScreenActivity.CLOSE_LOCK_SCREEN_ACTION));
 		}
 }
 ```
