@@ -179,14 +179,8 @@ performInteraction.setInteractionLayout(LayoutMode.LIST_ONLY);
 A text-to-speech chunk is a text phrase or prerecorded sound that will be spoken by the head unit. The text parameter specifies the text to be spoken or the name of the pre-recorded sound. Use the type parameter to define the type of information in the text parameter. The `PerformInteraction` request can have a initial, timeout, and a help prompt.
 
 ```java
-TTSChunk initialChunk = new TTSChunk();
-initialChunk.setText("Hello, welcome.");
-initialChunk.setType(SpeechCapabilities.PRE_RECORDED);
-    
-List<TTSChunk> chunks = new ArrayList<>();
-chunks.add(initialChunk);
-
-performInteraction.setInitialPrompt(chunks);
+performInteraction.setInitialPrompt(
+	TTSChunkFactory.createSimpleTTSChunks("Hello, welcome."));
 ```
 
 #### Timeout
