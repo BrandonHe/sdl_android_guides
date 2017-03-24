@@ -22,7 +22,7 @@ PutFile putFileRequest = new PutFile();
 putFileRequest.setSdlFileName("appIcon.jpeg");
 putFileRequest.setFileType(FileType.GRAPHIC_JPEG);
 putFileRequest.setPersistentFile(true);
-putFileRequest.setFileData(file_data);
+putFileRequest.setFileData(file_data); // can create file_data using helper method below
 putFileRequest.setCorrelationID(CorrelationIdGenerator.generateId());
 putFileRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
 
@@ -30,7 +30,7 @@ putFileRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         setListenerType(UPDATE_LISTENER_TYPE_PUT_FILE); // necessary for PutFile requests
 
-        if(((PutFileResponse) response).getSuccess()){
+        if(response.getSuccess()){
             try {
                 proxy.setappicon("appIcon.jpeg", CorrelationIdGenerator.generateId());
             } catch (SdlException e) {
@@ -45,6 +45,41 @@ try {
     proxy.sendRPCRequest(putFileRequest);
 } catch (SdlException e) {
     e.printStackTrace();
+}
+```
+
+App icons and other images might be hardcoded into the app and getting their raw data will be important. The following method will help get that data:
+
+```java
+/**
+* Helper method to take resource files and turn them into byte arrays
+* @param resource Resource file id.
+* @return Resulting byte array.
+*/
+private byte[] contentsOfResource(int resource) {
+	InputStream is = null;
+	try {
+		is = getResources().openRawResource(resource);
+		ByteArrayOutputStream os = new ByteArrayOutputStream(is.available());
+		final int bufferSize = 4096;
+		final byte[] buffer = new byte[bufferSize];
+		int available;
+		while ((available = is.read(buffer)) >= 0) {
+			os.write(buffer, 0, available);
+		}
+		return os.toByteArray();
+	} catch (IOException e) {
+		Log.w(TAG, "Can't read icon file", e);
+		return null;
+	} finally {
+		if (is != null) {
+			try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
 ```
 
@@ -75,7 +110,7 @@ listFiles.setCorrelationID(CorrelationIdGenerator.generateId());
 listFiles.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if(((ListFilesResponse) response).getSuccess()){
+        if(response.getSuccess()){
             List<String> filenames = ((ListFilesResponse) response).getFilenames();
             if(filenames.contains("appIcon.jpeg")){
                 Log.i("SdlService", "App icon is already uploaded.");
@@ -103,7 +138,7 @@ listFiles.setCorrelationID(CorrelationIdGenerator.generateId());
 listFiles.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if(((ListFilesResponse) response).getSuccess()){
+        if(response.getSuccess()){
             Integer spaceAvailable = ((ListFilesResponse) response).getSpaceAvailable();
             Log.i("SdlService", "Space available on Core = " + spaceAvailable);
         }else{
@@ -129,7 +164,7 @@ deleteFileRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
 
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if(((DeleteFileResponse) response).getSuccess()){
+        if(response.getSuccess()){
             Log.i("SdlService", "App icon deleted.");
         }else{
             Log.i("SdlService", "Unable to delete app icon.");
