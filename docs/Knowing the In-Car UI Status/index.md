@@ -11,7 +11,7 @@ LIMITED     | For Media apps, this means that a user has opened your app, but is
 FULL        | Your app is currently in focus on the screen.
 
 ### Monitoring HMI Status
-Monitoring HMI Status is possible through a `OnHMIStatus` notification in the `onOnHMIStatus()` callback in your app's SDL Service. It will give you information relating the previous and new HMI levels your app is progressing through.
+Monitoring HMI Status is possible through an `OnHMIStatus` notification in the `onOnHMIStatus()` callback in your app's SDL Service. It will give you information relating to the previous and new HMI levels your app is progressing through.
 
 ```java
 public void onOnHMIStatus(OnHMIStatus notification) {
