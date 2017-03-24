@@ -32,7 +32,7 @@ proxy.sendRPCRequest(performAPT);
 In order to know the currently supported audio capture capabilities of the connected head unit, please refer to the `SdlProxyALM` object created when your SDL Service starts. It contains a method `getAudioPassThruCapabilities` that returns a list of `AudioPassThruCapabilities` that the head unit supports.
 
 !!! note
-Currently, Ford's SYNC 3 vehicles only support Sampling Rates of 16 khz and Bit Rates of 16 bit.
+Currently, Ford's SYNC 3 vehicles only support a sampling rates of 16 khz and a bit rate of 16.
 !!!
 
 ### Gathering Audio Data
@@ -56,23 +56,23 @@ This audio data is only the current audio data, so the developer must be in char
 
 
 ### Ending Audio Capture
-Perform Audio Pass Thru is a request that works in a different way when compared to other RPCs. For most RPCs, and request is followed by an immediate response, with whether that RPC was successful or not. This RPC, however, will only send out the response when the Perform Audio Pass Thru is ended.
+`AudioPassThru` is a request that works in a different way when compared to other RPCs. For most RPCs a request is followed by an immediate response that informs the developer whether or not that RPC was successful. This RPC, however, will only send out the response when the Perform Audio Pass Thru is ended.
 
 Audio Capture can be ended in 4 ways:
 
-1. Audio Pass Thru has timed out.
+1. `AudioPassThru` has timed out.
 
     If the audio passthrough has proceeded longer than the requested timeout duration, Core will end this request and send a `PerformAudioPassThruResponse` with a `Result` of `SUCCESS`. You should expect to handle this audio passthrough as though it was successful.
 
-2. Audio Pass Thru was closed due to user pressing "Cancel".
+2. `AudioPassThru` was closed due to user pressing "Cancel".
 
     If the audio passthrough was displayed, and the user pressed the "Cancel" button, you will receive a `PerformAudioPassThruResponse` with a `Result` of `ABORTED`. You should expect to ignore this audio pass through.
 
-3. Audio Pass Thru was closed due to user pressing "Done".
+3. `AudioPassThru` was closed due to user pressing "Done".
 
     If the audio passthrough was displayed, and the user pressed the "Done" button, you will receive a `PerformAudioPassThruResponse` with a `Result` of `SUCCESS`. You should expect to handle this audio passthrough as though it was successful.
 
-4. Audio Pass Thru was ended due to the developer ending the request.
+4. `AudioPassThru` was ended due to the developer ending the request.
 
     If the audio passthrough was displayed, but you have established on your own that you no longer need to capture audio data, you can send an `EndAudioPassThru` RPC.
 
@@ -82,10 +82,10 @@ endAPT.setCorrelationID(CorrelationIdGenerator.generateId());
 proxy.sendRPCRequest(endAPT);
 ```
 
-You will receive a `EndAudioPassThruResponse` and `PerformAudioPassThruResponse` with a `Result` of `SUCCESS`, and should expect to handle this audio passthrough as though it was successful.
+You will receive an `EndAudioPassThruResponse` and a `PerformAudioPassThruResponse` with a `Result` of `SUCCESS`, and should expect to handle this audio passthrough as though it was successful.
 
 ### Handling the Response
-To process the response that we received from an ended audio capture, we monitor the `PerformAudioPassThruResponse` through the callback in the Sdl Service.
+To process the response that we received from an ended audio capture, we monitor the `PerformAudioPassThruResponse` through the callback in the Sdl Service. If the response has a successful `Result`, all of the audio data for the passthrough has been received and is ready for processing.
 
 ```java
 @Override
