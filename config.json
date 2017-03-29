@@ -27,6 +27,10 @@
         },
 
         {
+            "name": "Knowing the In-Car UI Status"
+        },
+        
+        {
             "name": "Remote Procedure Calls",
             "navigation": [
                 {
