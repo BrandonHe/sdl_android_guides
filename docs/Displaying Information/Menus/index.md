@@ -12,7 +12,6 @@ Every template has a default menu button. The position of this button varies bet
 #### Add Menu Items
 The `AddCommand` RPC can be used to add items to the root menu or to a submenu. Each `AddCommand` RPC must be sent with a unique id, a voice-recognition command, and a set of menu parameters. The menu parameters include the menu name, the position of the item in the menu, and the id of the menu item’s parent. If the menu item is being added to the root menu, then the parent id is 0. If it is being added to a submenu, then the parent id is the submenu’s id.
 
-#### Objective-C
 ```java
 // Create the menu parameters
 // The parent id is 0 if adding to the root menu

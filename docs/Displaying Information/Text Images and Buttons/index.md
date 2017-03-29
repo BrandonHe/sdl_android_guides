@@ -115,10 +115,6 @@ Subscribe buttons are used to detect changes to hard buttons. You can subscribe 
 
 Audio buttons like the OK (i.e. the `play/pause` button), seek left, seek right, tune up, and tune down buttons can only be used with a media template. The OK, seek left, and seek right buttons will also show up on the screen in a predefined location dictated by the media template on touchscreens. The app will be notified when the user selects the subscribe button on the screen or when the user manipulates the corresponding hard button.
 
-!!! NOTE
-You will automatically be assigned the media template if you set your configuration app type as `MEDIA`.
-!!!
-
 You can subscribe to buttons using the `SubscribeButton` RPC. 
 
 ```java

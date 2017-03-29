@@ -56,6 +56,10 @@ try{
 ### Available Templates
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. Please check the `DisplayCapabilities` object returned by `SdlProxyALM.getDisplayCapabilities()` for the supported templates. The following examples show how templates will appear on the generic head unit.
 
+!!! NOTE
+You will automatically be assigned the media template if you set your configuration app type as `MEDIA`.
+!!!
+
 #### 1. MEDIA - with and without progress bar
 ##### Ford HMI
 ![MEDIA - with progress bar](assets/MediaWithProgressBar.png)
