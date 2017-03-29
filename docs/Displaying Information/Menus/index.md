@@ -29,7 +29,7 @@ proxy.sendRPCRequest(addCommand);
 ```
 
 #### Add a Submenu
-To create a submenu, first send a `AddSubMenu` RPC. When a response is received from the SDL Core, check if the submenu was added successfully. If it was, send an `AddCommand` RPC for each item in the submenu.
+To create a submenu, first send an `AddSubMenu` RPC. When a response is received from the SDL Core, check if the submenu was added successfully. If it was, send an `AddCommand` RPC for each item in the submenu.
 
 ```java
 int unique_id = 313;
