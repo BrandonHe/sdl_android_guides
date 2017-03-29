@@ -1,5 +1,5 @@
 ## Uploading Files and Graphics
-Graphics allow for you to better customize what you would like to have your users see, and provide a better User Interface.
+Graphics allow for you to better customize what you would like to have your users see and provide a better User Interface.
 
 When developing an application using SmartDeviceLink, two things must always be remembered when using graphics:
 
