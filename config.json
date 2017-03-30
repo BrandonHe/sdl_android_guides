@@ -38,15 +38,15 @@
                 }
             ]
         },
-
+        {
+            "name": "Uploading Files and Graphics"
+        },
         {
             "name": "Getting Vehicle Data"
         },
-
         {
             "name": "Knowing the In-Car UI Status"
         },
-        
         {
             "name": "Remote Procedure Calls",
             "navigation": [
