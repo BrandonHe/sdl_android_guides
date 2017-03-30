@@ -6,15 +6,15 @@ This currently is only supported for Embedded Navigation. This does not work wit
 !!!
 
 !!! note
-SendLocation is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
+`SendLocation` is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
 !!!
 
 ### Determining the Result of SendLocation
-SendLocation has 3 possible results that you should expect:
+`SendLocation` has 3 possible results that you should expect:
 
-1. SUCCESS - SendLocation was successfully sent.
+1. SUCCESS - `SendLocation` was successfully sent.
 2. INVALID_DATA - The request you sent contains invalid data and was rejected.
-3. DISALLOWED - Your app does not have permission to use SendLocation.
+3. DISALLOWED - Your app does not have permission to use `SendLocation`.
 
 ### Detecting if SendLocation is Available
 `SendLocation` is a newer RPC, so there is a possibility that not all head units will support it, especially if you are connected to a head unit that does not have an embedded navigation. To see if `SendLocation` is supported, you may look at your `SdlProxyALM` object's `getHmiCapabilities` method after the successfully creating the proxy.
@@ -27,8 +27,8 @@ if(proxy.getHmiCapabilities().isNavigationAvailable()){
 }
 ```
 
-### Using Send Location
-To use SendLocation, you must at least include the Longitude and Latitude of the location. You can also include an address, name, description, phone number, and image.
+### Using SendLocation
+To use `SendLocation`, you must at least include the Longitude and Latitude of the location. You can also include an address, name, description, phone number, and image.
 
 ```java
 SendLocation sendLocation = new SendLocation();
