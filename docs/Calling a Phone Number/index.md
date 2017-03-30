@@ -16,10 +16,10 @@ Dialing a Phone Number allows you to send a phone number to dial on the user's p
 `DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To see if `DialNumber` is supported, you may look at your SdlProxyALM object's getHmiCapabilities method after the successfully creating the proxy.
 
 ```java
-if(proxy.getHmiCapabilities().isNavigationAvailable()){
-	// SendLocation supported
+if(proxy.getHmiCapabilities().isPhoneCallAvailable()){
+	// DialNumber supported
 }else{
-	// SendLocation is not supported
+	// DialNumber is not supported
 }
 ```
 
