@@ -74,10 +74,10 @@ We want to tell our local Sdl Broadcast Receiver to restart the service when the
 ```
 @Override
 public void onProxyClosed(String info, Exception e, SdlDisconnectedReason reason) {
+	stopSelf();
 	if(reason.equals(SdlDisconnectedReason.LANGUAGE_CHANGE)){
 		Intent intent = new Intent(SdlReceiver.ACTION_LANGUAGE_CHANGED);
 		sendBroadcast(intent);
 	}
-	stopSelf();
 }
 ```
