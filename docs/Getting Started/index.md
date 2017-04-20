@@ -235,6 +235,18 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 }
 ```
 
+!!! MUST 
+SdlBroadcastReceiver must call super if ```onReceive``` is overridden
+!!!
+
+``` java
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		super.onReceive(context, intent);
+		//your code here
+	}
+```
+
 If you created the BroadcastReceiver using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the receiver needs to be defined in the manifest. Regardless, the manifest needs to be edited so that the `SdlBroadcastReceiver` needs to respond to the following intents:
 
 * [android.bluetooth.device.action.ACL_CONNECTED](https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#ACTION_ACL_CONNECTED)

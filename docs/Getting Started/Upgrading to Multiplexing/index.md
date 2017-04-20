@@ -170,13 +170,14 @@ The `onSdlEnabled` method will be the main start point for our SDL connection se
 !!!
 
 !!! MUST 
-SdlBroadcastReceiver must call super if onReceive is overridden
+SdlBroadcastReceiver must call super if ```onReceive``` is overridden
 !!!
 
 ``` java
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		super.onReceive(context, intent);
+		//your code here
 	}
 ```
 
