@@ -276,6 +276,10 @@ If you created the BroadcastReceiver using the Android Studio template then the 
 The intent `sdl.router.startservice` is a custom intent that will come from the SdlRouterService to tell us that we have just connected to an SDL enabled piece of hardware.
 !!!
 
+!!! Note
+SdlBroadcastReceiver has to be exported, or it will not work correctly
+!!!
+
 Next, we want to make sure we supply our instance of the SdlBroadcastService with our local copy of the SdlRouterService. We do this by simply returning the class object in the method defineLocalSdlRouterClass:
 
 ```java
