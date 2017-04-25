@@ -1,6 +1,6 @@
 {
     "Authors": [
-        "Joey Grover", "Corey Maylone", "Austin Kirk"
+        "Joey Grover", "Corey Maylone", "Austin Kirk", "Brett McIsaac"
     ],
     "languages": [
         "en"
@@ -17,7 +17,9 @@
                 }
             ]
         },
-
+        {
+            "name": "Hello Sdl Android"
+        },
         {
             "name": "Adding the Lock Screen"
         },
