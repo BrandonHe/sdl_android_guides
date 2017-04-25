@@ -75,10 +75,30 @@ if(sdlOutStream != null){
 }
 ```
 
+Before starting the encoder, you can OPTIONALLY set the following streaming parameters, overriding their default values (all are Integers): 
+
+ * Frame rate (fps) - desired frame rate for the streaming video
+ * Bitrate (bits/sec) - desired bit rate for the streaming video
+ * IFrame interval (frames) - desired amount of frames between getting an IFrame
+ * Refresh rate (ms) - desired refresh rate of the `SdlPresentation` in milliseconds
+
+Use the `VirtualDisplayEncoder.setStreamParams()` method to set these parameters BEFORE starting the encoder.
+
+```
+vdEncoder.init(...);
+...
+
+vdEncoder.setStreamParams(24, 512000, 5, 100);
+
+...
+vdEncoder.start();
+```
+	
+
 ### Step Three : Processing Touch Events From the Head Unit
 When your presentation is actively being displayed to the head unit, you can process and respond to the touches on buttons and other display elements. To do so, you must satisfy these two requirements:
 
-1) Your app's APP_ID must have the permission to receive OnTouchEvent notifications. You can apply for an APP_ID with this permission by contacting an OEM (Ford dev site) or by turning off your development head unit's policy settings. 
+1) Your app's APP ID must have the permission to receive OnTouchEvent notifications. You can apply for an APP ID with this permission by contacting an OEM like [Ford](https://developer.ford.com/pages/develop) or by turning off your development head unit's policy settings. 
 2) In your Sdl Service's `onOnTouchEvent()` callback, you must forward the notification to your `VirtualDisplayEncoder` object like so:
 
 ```
