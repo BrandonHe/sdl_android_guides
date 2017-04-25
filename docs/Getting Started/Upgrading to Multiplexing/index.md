@@ -216,6 +216,10 @@ Now we need to add two extra intent actions to or our intent filter for the SdlB
 </manifest>
 ```
 
+!!! MUST
+SdlBroadcastReceiver has to be exported, or it will not work correctly
+!!!
+
 
 ### Main Activity
 
