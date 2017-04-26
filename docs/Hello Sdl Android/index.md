@@ -65,6 +65,10 @@ Right out of the box, all you need to do to run bluetooth is to select the ```mb
 
 For TCP, you may use the built in Android emulator or an Android phone on the same network as Sdl Core. For Bluetooth, you will need an Android phone with Bluetooth enabled. 
 
+!!! MUST
+Make sure Sdl Core and the HMI are running prior to running Hello Sdl Android
+!!!
+
 Run the project in Android Studio, targeting the device you want Hello Sdl Android installed on. 
 
 Hello Sdl Android should compile and launch on your device of choosing:
