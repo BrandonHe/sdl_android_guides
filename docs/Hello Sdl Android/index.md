@@ -59,11 +59,11 @@ if you do not change the target IP address, the application will not connect to 
 
 ### Configure for Bluetooth
 
-Right out of the box, all you need to do to run bluetooth is to select the ```mbtDebug``` (Multiplexing Bluetooth) build flavor. 
+Right out of the box, all you need to do to run bluetooth is to select the ```mbt_offDebug``` (Multiplexing Bluetooth) build flavor. 
 
 ### Building the Project.
 
-For TCP, you may use the built in Android emulator or an Android phone on the same network as Sdl Core. For Bluetooth, you will need an Android phone with Bluetooth enabled. 
+For TCP, you may use the built-in Android emulator or an Android phone on the same network as Sdl Core. For Bluetooth, you will need an Android phone that is paired to a TDK or head unit via Bluetooth.
 
 !!! MUST
 Make sure Sdl Core and the HMI are running prior to running Hello Sdl Android

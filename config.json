@@ -14,11 +14,11 @@
                 },
                 {
                     "name" : "Using AOA Protocol"
+                },
+                {
+                    "name": "Hello Sdl Android"
                 }
             ]
-        },
-        {
-            "name": "Hello Sdl Android"
         },
         {
             "name": "Adding the Lock Screen"
