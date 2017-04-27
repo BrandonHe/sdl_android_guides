@@ -22,9 +22,9 @@ Sdl Core and a HMI are needed to run Hello Sdl Android and to ensure that it con
 
 #### Build Flavors
 
-Hello Sdl Android has been built with different **build flavors** that allow you to test different configurations of the application without modifying much, if any, code. 
+Hello Sdl Android has been built with different **build flavors**. 
 
-To access the Build Variant menu in Android Studio, click on the menu ```Build``` then ```Select Build Variant```. A small window will appear on the bottom left of your IDE window that allows you to choose a flavor. 
+To access the Build Variant menu to choose your flavor, click on the menu ```Build``` then ```Select Build Variant```. A small window will appear on the bottom left of your IDE window that allows you to choose a flavor.
 
 There are many flavors to choose from and for now we will only be concerned with the debug versions. 
 
@@ -39,7 +39,7 @@ We will mainly be dealing with mbt (if using a TDK) or tcp (if connecting to SDL
 
 ### Configuring for TCP
 
-Since we most likely will not have a TDK, we will want to connect to SDL core via a virtual machine or to your localhost. To do this we will use the flavor ```tcpDebug```. 
+If you aren't using a TDK or head unit, you can connect to SDL core via a virtual machine or to your localhost. To do this we will use the flavor ```tcpDebug```. 
 
 For TCP to work, you will have to know the IP address of your machine that is running Sdl Core. If you don't know what it is, running ```ifconfig``` in a linux terminal will usually let you see it for the interface you are connected with to your network. We have to modify the IP address in Hello Sdl Android to let it know where your instance of Sdl Core is running. 
 
