@@ -37,7 +37,9 @@ Versions Include:
 
 We will mainly be dealing with mbt (if using a TDK) or tcp (if connecting to SDL Core via a virtual machine or your localhost)
 
-### Configuring for TCP
+### Transports
+
+#### Configure for TCP
 
 If you aren't using a TDK or head unit, you can connect to SDL core via a virtual machine or to your localhost. To do this we will use the flavor ```tcpDebug```. 
 
@@ -57,9 +59,13 @@ In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_A
 if you do not change the target IP address, the application will not connect to Sdl Core or show up on the HMI
 !!!
 
-### Configure for Bluetooth
+#### Configure for Bluetooth
 
-Right out of the box, all you need to do to run bluetooth is to select the ```mbt_offDebug``` (Multiplexing Bluetooth) build flavor. 
+Right out of the box, all you need to do to run bluetooth is to select the ```mbt_offDebug``` (Multiplexing Bluetooth) build flavor.
+
+#### Configure for USB (AOA)
+
+If you modify Hello Sdl Android to need USB transport, select the ```usbDebug``` build flavor. There is also much more information for USB transport under Getting Started - Using AOA Protocol.  
 
 ### Building the Project.
 
