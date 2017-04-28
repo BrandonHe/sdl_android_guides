@@ -7,16 +7,16 @@ Download the latest release from [GitHub](https://github.com/smartdevicelink/sdl
 
 Extract the source code from the archive
 
-Import the code in the `sdl_android_lib` folder as a module in Android Studio:
+Import the code in the top level `sdl_android` folder as a module in Android Studio:
 
-1. Click `File` -> `New` -> `Import Module...` -> Choose the location of `sdl_android_lib` as your Source Directory
-2. The module name will automatically be set to `sdl_android_lib`, change this as desired. Click `Next` and then `Finish`
+1. Click `File` -> `New` -> `Import Module...` -> Choose the location of `sdl_android` as your Source Directory
+2. The module name will automatically be set to `sdl_android`, change this as desired. Click `Next` and then `Finish`
 
-The `sdl_android_lib` is now a module in your Android Studio project, but it needs to be added as a dependency to your application. Add the following to the gradle dependencies of your project:
+The `sdl_android` library is now a module in your Android Studio project, but it needs to be added as a dependency to your application. Add the following to the gradle dependencies of your project:
 
 ```gradle
 dependencies {
-    compile project(path: ':sdl_android_lib')
+    compile project(path: ':sdl_android')
 }
 
 ```
@@ -161,7 +161,7 @@ public class SdlService extends Service implements IProxyListenerALM {
 `onProxyClosed()` is called whenever the proxy detects some disconnect in the connection, whether initiated by the app, by SDL, or by the device’s bluetooth connection. As long as the exception does not equal Sdl_PROXY_CYCLED or BLUETOOTH_DISABLED, the proxy would be reset for the exception SDL_PROXY_DISPOSED.
 
 !!! IMPORTANT
-We must properly dispose of our proxy in the `onDestory()` method because SDL will issue an error that it lost connection with the app if the connection fails before calling `proxy.dispose()`.
+We must properly dispose of our proxy in the `onDestroy()` method because SDL will issue an error that it lost connection with the app if the connection fails before calling `proxy.dispose()`.
 !!!
 
 ##SmartDeviceLink Router Service
@@ -264,7 +264,7 @@ If you created the BroadcastReceiver using the Android Studio template then the 
         ...
 
         <receiver
-            android:name=".SdlBroadcastReceiver"
+            android:name=".SdlReceiver"
             android:exported="true"
             android:enabled="true">
     
@@ -295,7 +295,7 @@ SdlBroadcastReceiver has to be exported, or it will not work correctly
 Next, we want to make sure we supply our instance of the SdlBroadcastService with our local copy of the SdlRouterService. We do this by simply returning the class object in the method defineLocalSdlRouterClass:
 
 ```java
-public class SdlBroadcastReceiver extends BroadcastReceiver {
+public class SdlReceiver extends SdlBroadcastReceiver {
           	@Override
 	public void onSdlEnabled(Context context, Intent intent) {
 		//..
@@ -313,7 +313,7 @@ public class SdlBroadcastReceiver extends BroadcastReceiver {
 We want to start the SDL Proxy when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the onSdlEnabled method:
 
 ```java
-public class SdlBroadcastReceiver extends BroadcastReceiver {
+public class SdlReceiver extends SdlBroadcastReceiver {
    
    @Override
 	public void onSdlEnabled(Context context, Intent intent) {
