@@ -65,7 +65,7 @@ Right out of the box, all you need to do to run bluetooth is to select the ```mb
 
 #### Configure for USB (AOA)
 
-If you modify Hello Sdl Android to need USB transport, select the ```usbDebug``` build flavor. There is also much more information for USB transport under Getting Started - Using AOA Protocol.  
+To connect to an SDL Core instance or TDK via USB transport, select the ```usbDebug``` build flavor. There is more information for USB transport under Getting Started - Using AOA Protocol.  
 
 ### Building the Project.
 
@@ -118,33 +118,3 @@ Sometimes things don't always go as planned, and so this section exists. If your
 2. Ensure your phone is properly paired with the TDK
 3. Make sure Bluetooth is turned on - on Both the TDK and your phone
 4. Make sure apps are enabled on the TDK (in settings)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
