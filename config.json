@@ -64,6 +64,10 @@
         },
 
         {
+            "name": "Handling Language Change"
+        },
+
+        {
             "name": "Remote Procedure Calls",
             "navigation": [
                 {
