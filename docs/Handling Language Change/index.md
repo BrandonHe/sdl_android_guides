@@ -20,7 +20,7 @@ When the Sdl Service's connection to core is closed, we want to tell our local S
 
 Then, override the `onReceive()` method of the local Sdl Broadcast Receiver to call `onSdlEnabled()` when receiving that action:
 
-```
+```java
 @Override
 public void onReceive(Context context, Intent intent) {
 	super.onReceive(context, intent); // Required if overriding this method
@@ -46,7 +46,7 @@ Be sure to call `super.onReceive(context, intent);` at the start of the method!
 This guide also assumes your local Sdl Broadcast Receiver implements the `onSdlEnabled()` method as follows:
 !!!
 
-```
+```java
 @Override
 public void onSdlEnabled(Context context, Intent intent) {
 	intent.setClass(context, SdlService.class);
@@ -57,7 +57,7 @@ public void onSdlEnabled(Context context, Intent intent) {
 ## Sdl Service
 Without accounting for a language change, your Sdl Service's `onProxyClosed()` method probably looked similar to this:
 
-```
+```java
 @Override
 public void onProxyClosed(String info, Exception e, SdlDisconnectedReason reason) {
 	stopSelf();
@@ -66,7 +66,7 @@ public void onProxyClosed(String info, Exception e, SdlDisconnectedReason reason
 
 We want to tell our local Sdl Broadcast Receiver to restart the service when the reason for closing is a language change. To do so, modify the method as follows: 
 
-```
+```java
 @Override
 public void onProxyClosed(String info, Exception e, SdlDisconnectedReason reason) {
 	stopSelf();
