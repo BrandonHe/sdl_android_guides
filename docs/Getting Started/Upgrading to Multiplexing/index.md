@@ -146,7 +146,7 @@ The actual package definition for the SdlRouterService might be different. Just 
 !!!
 
 ```java
-public class SdlBroadcastReceiver extends BroadcastReceiver {
+public class SdlReceiver extends SdlBroadcastReceiver {
    
    @Override
 	public void onSdlEnabled(Context context, Intent intent) {
@@ -195,7 +195,7 @@ Now we need to add two extra intent actions to or our intent filter for the SdlB
         ...
 
         <receiver
-            android:name=".SdlBroadcastReceiver"
+            android:name=".SdlReceiver"
             android:exported="true"
             android:enabled="true">
     
