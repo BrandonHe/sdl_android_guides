@@ -141,12 +141,12 @@ Next, we want to make sure we supply our instance of the SdlBroadcastService wit
 
 
 We want to start the SDL Proxy when an SDL connection is made via the `SdlRouterService`. This is likely code included on the `onReceive` method call previously. We do this by taking action in the onSdlEnabled method:
-!!!NOTE
+!!! NOTE
 The actual package definition for the SdlRouterService might be different. Just make sure to return your local copy and not the class object from the library itself.
 !!!
 
 ```java
-public class SdlBroadcastReceiver extends BroadcastReceiver {
+public class SdlReceiver extends SdlBroadcastReceiver {
    
    @Override
 	public void onSdlEnabled(Context context, Intent intent) {
@@ -169,6 +169,17 @@ public class SdlBroadcastReceiver extends BroadcastReceiver {
 The `onSdlEnabled` method will be the main start point for our SDL connection session. We define exactly what we want to happen when we find out we are connected to SDL enabled hardware.
 !!!
 
+!!! MUST 
+SdlBroadcastReceiver must call super if ```onReceive``` is overridden
+!!!
+
+``` java
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		super.onReceive(context, intent);
+		//your code here
+	}
+```
 
 Now we need to add two extra intent actions to or our intent filter for the SdlBroadcastReceiver:
 
@@ -184,7 +195,7 @@ Now we need to add two extra intent actions to or our intent filter for the SdlB
         ...
 
         <receiver
-            android:name=".SdlBroadcastReceiver"
+            android:name=".SdlReceiver"
             android:exported="true"
             android:enabled="true">
     
@@ -204,6 +215,10 @@ Now we need to add two extra intent actions to or our intent filter for the SdlB
 
 </manifest>
 ```
+
+!!! MUST
+SdlBroadcastReceiver has to be exported, or it will not work correctly
+!!!
 
 
 ### Main Activity

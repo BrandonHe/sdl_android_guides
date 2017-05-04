@@ -1,6 +1,6 @@
 {
     "Authors": [
-        "Joey Grover", "Corey Maylone"
+        "Joey Grover", "Corey Maylone", "Austin Kirk", "Brett McIsaac"
     ],
     "languages": [
         "en"
@@ -10,13 +10,63 @@
             "name": "Getting Started",
             "navigation": [
                 {
-                    "name": "Upgrading to Multiplexing"
+                    "name" : "Upgrading to Multiplexing"
+                },
+                {
+                    "name" : "Using AOA Protocol"
+                },
+                {
+                    "name": "Hello Sdl Android"
                 }
             ]
         },
+        {
+            "name": "Adding the Lock Screen"
+        },
+        {
+            "name": "Displaying Information",
+            "navigation": [
+                {
+                    "name" : "Designing the User Interface"
+                },
+                {
+                    "name" : "Text Images and Buttons"
+                },
+                {
+                    "name" : "Menus"
+                },
+                {
+                    "name" : "Alerts"
+                }
+            ]
+        },
+        {
+            "name": "Uploading Files and Graphics"
+        },
+        {
+            "name": "Getting Vehicle Data"
+        },
+        {
+            "name": "Knowing the In-Car UI Status"
+        },
+        {
+            "name": "Setting the Navigation Destination"
+        },
 
         {
-            "name": "Lockscreen"
+            "name": "Calling a Phone Number"
+        },
+
+        {
+            "name": "Getting In-Car Audio"
+        },
+
+        {
+            "name": "Setting Security Level for Multiplexing"
+        },
+
+        {
+            "name": "Handling Language Change"
         },
 
         {
