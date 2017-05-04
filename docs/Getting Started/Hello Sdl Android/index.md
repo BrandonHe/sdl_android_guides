@@ -67,7 +67,7 @@ Right out of the box, all you need to do to run bluetooth is to select the ```mb
 
 To connect to an SDL Core instance or TDK via USB transport, select the ```usbDebug``` build flavor. There is more information for USB transport under Getting Started - Using AOA Protocol.  
 
-### Building the Project.
+### Building the Project
 
 For TCP, you may use the built-in Android emulator or an Android phone on the same network as Sdl Core. For Bluetooth, you will need an Android phone that is paired to a TDK or head unit via Bluetooth.
 
