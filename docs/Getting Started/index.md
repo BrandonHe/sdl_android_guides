@@ -59,9 +59,9 @@ In the AndroidManifest for our sample project we need to ensure we have the foll
 
 ## SmartDeviceLink Service
 
-A SmartDeviceLink Android Service should be created to manage the lifecycle of an [SDLProxy][SdlProxy]. The SDLService enables auto-start by creating a SDLProxy, which then waits for a connection from SDL. This file also sends and receives messages to and from SDL after connected.
+A SmartDeviceLink Android Service should be created to manage the lifecycle of an SDL Proxy. The SDL Service enables auto-start by creating the SDL Proxy, which then waits for a connection from SDL. This file also sends and receives messages to and from SDL after connected.
 
-Create a new service and name it appropriately, for this guide we are going to call it `SdlService`. This service must implement the [IProxyListenerALM][IProxyListenerALM] interface:
+Create a new service and name it appropriately, for this guide we are going to call it `SdlService`. This service must implement the `IProxyListenerALM` interface:
  
 ```java
 public class SdlService extends Service implements IProxyListenerALM {
