@@ -10,6 +10,9 @@
             "name": "Getting Started",
             "navigation": [
                 {
+                    "name" : "Compiling with Gradle"
+                },
+                {
                     "name" : "Upgrading to Multiplexing"
                 },
                 {
