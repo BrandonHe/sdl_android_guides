@@ -23,7 +23,18 @@ dependencies {
 
 #### Gradle
 
-The SDL Android libraries are not yet available for download from jcenter
+To compile with the a release of SDL Android, include the following in your app's `build.gradle` file,
+
+```
+repositories {
+    jcenter()
+}
+dependencies {
+    compile 'com.smartdevicelink:sdl_android:{version}'
+}
+```
+
+and replace `{version}` with the desired release version in format of `x.x.x`. The list of releases can be found [here](https://github.com/smartdevicelink/sdl_android/releases). For more information, see the _Compiling With Gradle_ guide.
 
 
 # Getting Started on Android

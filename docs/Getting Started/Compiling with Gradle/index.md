@@ -17,9 +17,7 @@ To compile with the a release of SDL Android, include the following line in your
 
 ```
 dependencies {
-    ...
     compile 'com.smartdevicelink:sdl_android:{version}'
-    ...
 }
 ```
 
@@ -31,9 +29,7 @@ To compile release 4.3.0, use the following line:
 
 ```
 dependencies {
-    ...
     compile 'com.smartdevicelink:sdl_android:4.3.0'
-    ...
 }
 ```
 
@@ -41,8 +37,6 @@ To compile the latest minor release of major version 4, use:
 
 ```
 dependencies {
-    ...
     compile 'com.smartdevicelink:sdl_android:4.+'
-    ...
 }
 ```
