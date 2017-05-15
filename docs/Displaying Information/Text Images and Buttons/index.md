@@ -75,10 +75,12 @@ List<SoftButton> softButtons = new ArrayList<>();
 SoftButton yesButton = new SoftButton();
 yesButton.setType(SoftButtonType.SBT_TEXT);
 yesButton.setText("Yes");
+yesButton.setSoftButtonID(0);
 
 SoftButton cancelButton = new SoftButton();
 cancelButton.setType(SoftButtonType.SBT_IMAGE);
 cancelButton.setImage(cancelImage);
+cancelButton.setSoftButtonID(1);
 
 softButtons.add(yesButton);
 softButtons.add(cancelButton);
