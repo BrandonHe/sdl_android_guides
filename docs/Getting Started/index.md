@@ -34,8 +34,11 @@ dependencies {
 }
 ```
 
-and replace `{version}` with the desired release version in format of `x.x.x`. The list of releases can be found [here](https://github.com/smartdevicelink/sdl_android/releases). For more information, see the _Compiling With Gradle_ guide.
+and replace `{version}` with the desired release version in format of `x.x.x`. The list of releases can be found [here](https://github.com/smartdevicelink/sdl_android/releases). 
 
+!!! NOTE
+For more information, see the _Compiling With Gradle_ guide.
+!!!
 
 # Getting Started on Android
 
