@@ -101,6 +101,7 @@ show.setOnRPCResponseListener(new OnRPCResponseListener() {
 proxy.sendRPCRequest(show);
 ```
 
+
 #### Subscribe Buttons
 Subscribe buttons are used to detect changes to hard buttons. You can subscribe to the following hard buttons:
 
@@ -124,4 +125,59 @@ SubscribeButton subscribeButtonRequest = new SubscribeButton();
 subscribeButtonRequest.setButtonName(ButtonName.SEEKRIGHT);
 subscribeButtonRequest.setCorrelationID(CorrelationIdGenerator.generateId());
 proxy.sendRPCRequest(subscribeButtonRequest);
+```
+
+!!! NOTE
+It is not required to manually subscribe to soft buttons. When soft buttons are added, your app will automatically be subscribed for their events
+!!!
+
+##### Receiving Buttons Events
+Once you have successfully subscribed to buttons and/or added soft buttons you will likely want to know when events happen to those buttons. These events come through two callbacks from the `IProxyListenerALM` interface, `onOnButtonEvent` and `onOnButtonPress `. Depending which type of event you're looking for you can use that type of callback. The `ButtonName` enum refers to which button the event happened to. `SoftButton` events will have the `ButtonName` of `CUSTOM_BUTTON`.
+
+```java
+@Override
+public void onOnButtonEvent(OnButtonEvent notification) {
+	switch(notification.getButtonName()){
+			case CUSTOM_BUTTON:
+				//Custom buttons are the soft buttons previously added.
+				int ID = notification.getCustomButtonID();
+				Log.d("SdlService", "Button event received for button " + ID); 
+				break;
+			case OK: 
+				break;
+			case SEEKLEFT:
+				break;
+			case SEEKRIGHT:
+				break;
+			case TUNEUP:
+				break;
+			case TUNEDOWN:
+				break;
+			default:
+				break;
+		}
+}
+
+@Override
+public void onOnButtonPress(OnButtonPress notification) {
+		switch(notification.getButtonName()){
+			case CUSTOM_BUTTON:
+				//Custom buttons are the soft buttons previously added.
+				int ID = notification.getCustomButtonID();
+				Log.d("SdlService", "Button press received for button " + ID); 
+				break;
+			case OK: 
+				break;
+			case SEEKLEFT:
+				break;
+			case SEEKRIGHT:
+				break;
+			case TUNEUP:
+				break;
+			case TUNEDOWN:
+				break;
+			default:
+				break;
+		}
+}
 ```
