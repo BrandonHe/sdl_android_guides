@@ -131,7 +131,7 @@ proxy.sendRPCRequest(subscribeButtonRequest);
 It is not required to manually subscribe to soft buttons. When soft buttons are added, your app will automatically be subscribed for their events
 !!!
 
-##### Receiving Buttons Events
+#### Receiving Buttons Events
 Once you have successfully subscribed to buttons and/or added soft buttons you will likely want to know when events happen to those buttons. These events come through two callbacks from the `IProxyListenerALM` interface, `onOnButtonEvent` and `onOnButtonPress `. Depending which type of event you're looking for you can use that type of callback. The `ButtonName` enum refers to which button the event happened to. `SoftButton` events will have the `ButtonName` of `CUSTOM_BUTTON`.
 
 ```java
