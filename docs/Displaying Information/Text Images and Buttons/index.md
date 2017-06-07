@@ -163,7 +163,7 @@ public void onOnButtonPress(OnButtonPress notification) {
 		switch(notification.getButtonName()){
 			case CUSTOM_BUTTON:
 				//Custom buttons are the soft buttons previously added.
-				int ID = notification.getCustomButtonID();
+				int ID = notification.getCustomButtonName();
 				Log.d("SdlService", "Button press received for button " + ID); 
 				break;
 			case OK: 
