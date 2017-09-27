@@ -43,7 +43,7 @@ The following table lists what control items are in each control module.
 |         | Fan Speed Setting | 0%-100% | Get/Set/Notification |  |
 |         | Ventilation Mode Setting | upper,lower,both,none  | Get/Set/Notification |  |
 
-Remote Control can also allow mobile application to send button press event or long press event for the following common climate control buttons in the vehicle.
+Remote Control can also allow mobile applications to send button press event or long press event for the following common climate control buttons in the vehicle.
 The system shall list all available RC radio buttons and RC climate buttons in the existing ButtonCapabilities list.
 
 | RC Module | Control Button |
