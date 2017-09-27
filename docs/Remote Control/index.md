@@ -75,15 +75,19 @@ For Remote Control to work, the head unit must support SDL Core Version 4.4 or n
 
 #### System Capability
 
+!!! MUST 
 Prior to using using any Remote Control RPCs, you must check that the head unit has the Remote Control capability. As you may encounter head units that do *not* support it, this check is important.
+!!!
+
+To check for this capability, use the following call:
 
 ```java
     public void getSystemCapabilities(){
-        GetSystemCapability sc = new GetSystemCapability();
-        sc.setSystemCapabilityType(SystemCapabilityType.REMOTE_CONTROL);
+        GetSystemCapability systemCapability = new GetSystemCapability();
+        systemCapability.setSystemCapabilityType(SystemCapabilityType.REMOTE_CONTROL);
 
         try {
-            proxy.sendRPCRequest(sc);
+            proxy.sendRPCRequest(systemCapability);
         } catch (SdlException e) {
             e.printStackTrace();
         }
@@ -106,12 +110,12 @@ We may want to get data relating to a module in the vehicle. This could be used 
 
 ```java
     public void getInteriorVehicleData() {
-        GetInteriorVehicleData ivd = new GetInteriorVehicleData();
-        ivd.setModuleType(ModuleType.RADIO);
-        ivd.setSubscribe(TRUE);
+        GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData();
+        interiorVehicleData.setModuleType(ModuleType.RADIO);
+        interiorVehicleData.setSubscribe(TRUE);
 
         try {
-            proxy.sendRPCRequest(ivd);
+            proxy.sendRPCRequest(interiorVehicleData);
         } catch (SdlException e) {
             e.printStackTrace();
         }
