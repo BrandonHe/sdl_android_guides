@@ -73,6 +73,10 @@
         },
 
         {
+            "name": "Remote Control"
+        },
+
+        {
             "name": "Remote Procedure Calls",
             "navigation": [
                 {
@@ -116,7 +120,7 @@
                 },
                 {
                     "name" : "Show"
-                }, 
+                },
                 {
                     "name" : "SubscribeButton"
                 },
@@ -176,8 +180,8 @@
                 }
 
             ]
-        }, 
-        
+        },
+
 	{
 	}
     ]
