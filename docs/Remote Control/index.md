@@ -210,7 +210,7 @@ Simply specify the module, the button, and the type of press you would like:
 
 It is also possible to subscribe to changes in data associated with supported modules.
 
-To do so, during your `GET` request for data, simply add in `setSubscribe(Boolean)`. To unsubscribe, send the request again with the boolean set to `False`. A code sample for setting the subscribe is in the `GET` example above.
+To do so, during your `GET` request for data, simply add in `setSubscribe(Boolean)`. To unsubscribe, send the request again with the boolean set to `False`. A code sample for setting the subscription is in the `GET` example above.
 
 The response to a subscription will come in a form of a notification. You will need this overridden method to receive the notifications:
 
