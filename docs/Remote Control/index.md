@@ -23,7 +23,7 @@ The following table lists what control items are in each control module.
 
 | RC Module | Control Item | Value Range |Type | Comments |
 | ------------ | ------------ |------------ | ------------ | ------------ |
-| Radio | Radio Enabled | true,false  | Get/Set/Notification| read only, all other radio control items need radio enabled to work|
+| **Radio** | Radio Enabled | true,false  | Get/Set/Notification| read only, all other radio control items need radio enabled to work|
 |       | Radio Band | AM,FM,XM  | Get/Set/Notification| |
 |       | Radio Frequency | | Get/Set/Notification | value range depends on band |
 |       | Radio RDS Data | | Get/Notification | read only |
@@ -32,7 +32,7 @@ The following table lists what control items are in each control module.
 |       | Radio Signal Strength |  | Get/Notification | read only |
 |       | Signal Change Threshold |  | Get/Notification | read only |
 |       | Radio State | Acquiring, acquired, multicast, not_found | Get/Notification | read only |
-| Climate | Current Cabin Temperature |  | Get/Notification | read only, value range depends on OEM |
+| **Climate** | Current Cabin Temperature |  | Get/Notification | read only, value range depends on OEM |
 |         | Desired Cabin Temperature |  | Get/Set/Notification | value range depends on OEM |
 |         | AC Setting | on,off | Get/Set/Notification |  |
 |         | AC MAX Setting | on,off  | Get/Set/Notification |  |
@@ -43,7 +43,7 @@ The following table lists what control items are in each control module.
 |         | Fan Speed Setting | 0%-100% | Get/Set/Notification |  |
 |         | Ventilation Mode Setting | upper,lower,both,none  | Get/Set/Notification |  |
 
-In addition to the above RC data/settings, the SDL-RC can also allow mobile application to send button press event or long press event for the following common climate control buttons in the vehicle.
+Remote Control can also allow mobile application to send button press event or long press event for the following common climate control buttons in the vehicle.
 The system shall list all available RC radio buttons and RC climate buttons in the existing ButtonCapabilities list.
 
 | RC Module | Control Button |
@@ -60,7 +60,7 @@ The system shall list all available RC radio buttons and RC climate buttons in t
 |         | DEFROST MAX Button |
 |         | UPPER VENT Button |
 |         | LOWER WENT Button |
-| Radio   | VOLUME UP Button |
+| **Radio**   | VOLUME UP Button |
 |         | VOLUME DOWN Button |
 |         | EJECT Button |
 |         | SOURCE Button |
@@ -70,7 +70,7 @@ The system shall list all available RC radio buttons and RC climate buttons in t
 ## Integration
 
 !!! NOTE
-For Remote Control to work, the head unit must support SDL Core Version 4.4
+For Remote Control to work, the head unit must support SDL Core Version 4.4 or newer
 !!!
 
 #### System Capability
@@ -102,7 +102,7 @@ Prior to using using any Remote Control RPCs, you must check that the head unit 
 ```
 #### Getting Data
 
-We may want to get data relating to a module in the vehicle. This could be used to store the settings prior to setting them, saving user preferences, etc. Following the check on the system's capability to support Remote Control, we can get the data. The following is an example of getting data about the `RADIO` module:
+We may want to get data relating to a module in the vehicle. This could be used to store the settings prior to setting them, saving user preferences, etc. Following the check on the system's capability to support Remote Control, we can get the data. The following is an example of getting data about the `RADIO` module. It also subscribes to updates to radio data, which will be discussed later on in this guide.
 
 ```java
     public void getInteriorVehicleData() {
@@ -128,7 +128,7 @@ We may want to get data relating to a module in the vehicle. This could be used 
 ```
 #### Setting Data
 
-Of course, the ability to control these modules is the point of Remote Control (the hint is in the name :wink: ). Setting data is similar to getting it. Below is an example of setting `ClimateControlData`.
+Of course, the ability to set these modules is the point of Remote Control. Setting data is similar to getting it. Below is an example of setting `ClimateControlData`.
 
 ```java
     public void setInteriorVehicleData() {
@@ -175,7 +175,7 @@ Of course, you don't need to set *all* of the data of a module as I did in the e
 
 #### Button Presses
 
-Another unique feature of Remote Control is the ability to send long and short button presses to the associated modules.
+Another unique feature of Remote Control is the ability to send long and short button presses to the associated modules, imitating a button press on the hardware itself.
 
 Simply specify the module, the button, and the type of press you would like:
 
@@ -206,7 +206,7 @@ Simply specify the module, the button, and the type of press you would like:
 
 It is also possible to subscribe to changes in data associated with supported modules.
 
-To do so, during you `GET` request for data, simply add in `setSubscribe(Boolean)`. To unsubscribe, send the request again with the boolean set to `False`. A code sample for setting the subscribe is in the `GET` example above.
+To do so, during your `GET` request for data, simply add in `setSubscribe(Boolean)`. To unsubscribe, send the request again with the boolean set to `False`. A code sample for setting the subscribe is in the `GET` example above.
 
 The response to a subscription will come in a form of a notification. You will need this overridden method to receive the notifications:
 
