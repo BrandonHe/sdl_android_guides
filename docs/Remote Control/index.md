@@ -1,6 +1,6 @@
 # Remote Control
 
-Remote control provides a framework to allow apps to control certain, safe modules within a vehicle. These modules 
+Remote Control provides a framework to allow apps to control certain safe modules within a vehicle.
 
 !!! Note
 Not all vehicles have this functionality. Even if they support remote control, you will likely need to request permission from the vehicle manufacturer to use it. 
@@ -14,9 +14,9 @@ Consider the following scenarios:
 
 - A climate control application needs to turn on the AC, control the air circulation mode, change the fan speed and set the desired cabin temperature.
 
-- A user profile application wants to remember user's favorite settings and apply it later automatically when the users get into the same/another vehicle.
+- A user profile application wants to remember users' favorite settings and apply it later automatically when the users get into the same/another vehicle.
 
-Currently, the Remote control supports these modules:
+Currently, the Remote Control feature supports these modules:
 
 | Supported RC Modules |
 | ---------            |
@@ -38,18 +38,18 @@ The following table lists what control items are in each control module.
 |       | Radio State | Acquiring, acquired, multicast, not_found | Get/Notification | read only |
 | **Climate** | Current Cabin Temperature |  | Get/Notification | read only, value range depends on OEM |
 |         | Desired Cabin Temperature |  | Get/Set/Notification | value range depends on OEM |
-|         | AC Setting | on,off | Get/Set/Notification |  |
-|         | AC MAX Setting | on,off  | Get/Set/Notification |  |
-|         | Air Recirculation Setting | on,off  | Get/Set/Notification |  |
-|         | Auto AC Mode Setting | on,off  | Get/Set/Notification |  |
-|         | Defrost Zone Setting | front,rear,all,none  | Get/Set/Notification |  |
-|         | Dual Mode Setting | on,off  | Get/Set/Notification |  |
+|         | AC Setting | on, off | Get/Set/Notification |  |
+|         | AC MAX Setting | on, off  | Get/Set/Notification |  |
+|         | Air Recirculation Setting | on, off  | Get/Set/Notification |  |
+|         | Auto AC Mode Setting | on, off  | Get/Set/Notification |  |
+|         | Defrost Zone Setting | front, rear, all, none  | Get/Set/Notification |  |
+|         | Dual Mode Setting | on, off  | Get/Set/Notification |  |
 |         | Fan Speed Setting | 0%-100% | Get/Set/Notification |  |
-|         | Ventilation Mode Setting | upper,lower,both,none  | Get/Set/Notification |  |
+|         | Ventilation Mode Setting | upper, lower, both, none  | Get/Set/Notification |  |
 
 Remote Control can also allow mobile applications to send simulated button press events for the following common buttons in the vehicle.
 
-The system shall list all available buttons for remote control in the `RemoteControlCapabilities`. The capability object will have a List of `ButtonCapabilities` that can be obtained using `getButtonCapabilities()`.
+The system shall list all available buttons for Remote Control in the `RemoteControlCapabilities`. The capability object will have a List of `ButtonCapabilities` that can be obtained using `getButtonCapabilities()`.
 
 | RC Module | Control Button |
 | ------------ | ------------ |
@@ -64,7 +64,7 @@ The system shall list all available buttons for remote control in the `RemoteCon
 |         | DEFROST REAR |
 |         | DEFROST MAX |
 |         | UPPER VENT |
-|         | LOWER WENT |
+|         | LOWER VENT |
 | **Radio**   | VOLUME UP |
 |         | VOLUME DOWN |
 |         | EJECT |
@@ -108,7 +108,7 @@ To check for this capability, use the following call:
 ```
 #### Getting Data
 
-It is possible to retrieve current data relating to these remote control modules. The data could be used to store the settings prior to setting them, saving user preferences, etc. Following the check on the system's capability to support Remote Control, we can actually retrieve the data. The following is an example of getting data about the `RADIO` module. It also subscribes to updates to radio data, which will be discussed later on in this guide.
+It is possible to retrieve current data relating to these Remote Control modules. The data could be used to store the settings prior to setting them, saving user preferences, etc. Following the check on the system's capability to support Remote Control, we can actually retrieve the data. The following is an example of getting data about the `RADIO` module. It also subscribes to updates to radio data, which will be discussed later on in this guide.
 
 ```java
    GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData();
@@ -178,7 +178,7 @@ It is also possible to subscribe to changes in data associated with supported mo
 
 To do so, during your `GET` request for data, simply add in `setSubscribe(Boolean)`. To unsubscribe, send the request again with the boolean set to `False`. A code sample for setting the subscription is in the `GET` example above.
 
-The response to a subscription will come in a form of a notification. You can receive this notification through the `IProxyListenerALM` that was supplied to the `SdlProxyALM` object; the method `onOnInteriorVehicleData` will be called when the RPC is received. However you can also
+The response to a subscription will come in a form of a notification. You can receive this notification through the `IProxyListenerALM` that was supplied to the `SdlProxyALM` object; the method `onOnInteriorVehicleData` will be called when the RPC is received.
 
 ##### Using `IProxyListenerALM`
 ```java
