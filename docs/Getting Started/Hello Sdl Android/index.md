@@ -16,7 +16,7 @@ The SDL Android Library is packaged with the Hello Sdl Android Project - you wil
 
 If you are not using a Ford TDK for development, we will assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) (We recommend Ubuntu 16.04) and an [HMI](https://github.com/smartdevicelink/generic_hmi) setup prior to this point. Most people getting started with this tutorial will not have a Ford TDK, so sample outputs will be using Sdl Core and our Generic HMI.
 
-If you don't want to setup a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps via TCP/IP in the cloud, and works with Hello Sdl Android.
+If you don't want to setup a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps via TCP/IP in the cloud.
 
 !!! NOTE
 Sdl Core and a HMI or Manticore are needed to run Hello Sdl Android and to ensure that it connects
