@@ -9,7 +9,7 @@ First, make sure you download or clone the latest release from [GitHub](https://
 Open the project in [Android Studio](https://developer.android.com/studio/index.html). We will exclusively use Android Studio as it is the current supported platform for Android development. 
 
 !!! Note 
-The SDL Android Library is packaged with the Hello Sdl Android Project - you will not need to import it
+The SDL Android Library is setup to use sdl_android with Gradle. When you clone the repository, perform a Gradle sync.
 !!!
 
 ### Getting Started
