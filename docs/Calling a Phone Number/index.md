@@ -31,7 +31,6 @@ For DialNumber, all characters are stripped except for `0`-`9`, `*`, `#`, `,`, `
 ```java
 DialNumber dialNumber = new DialNumber();
 dialNumber.setNumber("1238675309");
-dialNumber.setCorrelationID(CorrelationIdGenerator.generateId());
 dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {

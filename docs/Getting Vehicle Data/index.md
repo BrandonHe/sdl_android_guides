@@ -42,7 +42,6 @@ Using `GetVehicleData`, we can ask for vehicle data a single time, if needed.
 ```java
 GetVehicleData vdRequest = new GetVehicleData();
 vdRequest.setPrndl(true);
-vdRequest.setCorrelationID(CorrelationIdGenerator.generateId());
 vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
 	@Override
 	public void onResponse(int correlationId, RPCResponse response) {
@@ -69,7 +68,6 @@ Subscribing to vehicle data allows you to get notified whenever we have new data
 ```java
 SubscribeVehicleData subscribeRequest = new SubscribeVehicleData();
 subscribeRequest.setPrndl(true);
-subscribeRequest.setCorrelationID(CorrelationIdGenerator.generateId());
 subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -104,7 +102,6 @@ Sometimes you may not always need all of the vehicle data you are listening to. 
 ```java
 UnsubscribeVehicleData unsubscribeRequest = new UnsubscribeVehicleData();
 unsubscribeRequest.setPrndl(true); // unsubscribe to PRNDL data
-unsubscribeRequest.setCorrelationID(CorrelationIdGenerator.generateId());
 unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
