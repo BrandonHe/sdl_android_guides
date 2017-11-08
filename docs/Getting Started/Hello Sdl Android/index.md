@@ -9,15 +9,17 @@ First, make sure you download or clone the latest release from [GitHub](https://
 Open the project in [Android Studio](https://developer.android.com/studio/index.html). We will exclusively use Android Studio as it is the current supported platform for Android development. 
 
 !!! Note 
-The SDL Android Library is packaged with the Hello Sdl Android Project - you will not need to import it
+The SDL Android Library is setup to use sdl_android with Gradle. When you clone the repository, perform a Gradle sync.
 !!!
 
 ### Getting Started
 
-If you are not using a Ford TDK for development, we will assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) (We recommend Ubuntu 14.04) and an [HMI](https://github.com/smartdevicelink/generic_hmi) setup prior to this point. Most people getting started with this tutorial will not have a Ford TDK, so sample outputs will be using Sdl Core and our Generic HMI.
+If you are not using a Ford TDK for development, we will assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) (We recommend Ubuntu 16.04) and an [HMI](https://github.com/smartdevicelink/generic_hmi) setup prior to this point. Most people getting started with this tutorial will not have a Ford TDK, so sample outputs will be using Sdl Core and our Generic HMI.
+
+If you don't want to setup a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps via TCP/IP in the cloud.
 
 !!! NOTE
-Sdl Core and a HMI are needed to run Hello Sdl Android and to ensure that it connects
+Sdl Core and a HMI or Manticore are needed to run Hello Sdl Android and to ensure that it connects
 !!!
 
 #### Build Flavors
@@ -111,6 +113,7 @@ Sometimes things don't always go as planned, and so this section exists. If your
 1. Make sure that you have changed the IP in ```SdlService.java``` to match the machine running Sdl Core. Being on the same network is also important.
 2. If you are sure that the IP is correct and it is still not showing up, make sure the Build Flavor that is running is ```tcpDebug```.
 3. If the two above dont work, make sure there is no firewall blocking the incoming port ```12345``` on the machine or VM running SDL Core. In the same breath, make sure your firewall allows that outgoing port. 
+4. There are different network configurations needed for different virtualization software (virtualbox, vmware, etc). Make sure yours is setup correctly. Or use [Manticore](https://smartdevicelink.com/resources/manticore/).
 
 #### Bluetooth
 

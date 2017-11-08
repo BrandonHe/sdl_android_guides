@@ -48,7 +48,6 @@ address.setCountryCode("US-SD");
 address.setCountryName("United States");
 
 sendLocation.setAddress(address);
-sendLocation.setCorrelationID(CorrelationIdGenerator.generateId());
 
 // Monitor response
 sendLocation.setOnRPCResponseListener(new OnRPCResponseListener() {

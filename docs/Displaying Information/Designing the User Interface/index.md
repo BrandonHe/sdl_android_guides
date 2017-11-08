@@ -33,7 +33,6 @@ To change a template at any time, send a `SetDisplayLayout` RPC to the SDL Core.
 ```java
 SetDisplayLayout setDisplayLayoutRequest = new SetDisplayLayout();
 setDisplayLayoutRequest.setDisplayLayout("GRAPHIC_WITH_TEXT");
-setDisplayLayoutRequest.setCorrelationID(CorrelationIdGenerator.generateId());
 setDisplayLayoutRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
