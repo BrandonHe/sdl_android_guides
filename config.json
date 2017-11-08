@@ -89,6 +89,10 @@
         },
 
         {
+            "name": "Remote Control"
+        },
+
+        {
             "name": "Remote Procedure Calls",
             "navigation": [
                 {
