@@ -65,6 +65,18 @@
         },
 
         {
+            "name": "Mobile Navigation",
+            "navigation" : [
+              {
+                  "name": "Introduction"
+              },
+              {
+                  "name": "Video Streaming"
+              }
+            ]
+        },
+
+        {
             "name": "Setting Security Level for Multiplexing"
         },
 
