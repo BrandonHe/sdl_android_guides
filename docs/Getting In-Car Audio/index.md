@@ -21,7 +21,6 @@ performAPT.setMaxDuration(7000);
 performAPT.setBitsPerSample(BitsPerSample._16_BIT);
 performAPT.setAudioType(AudioType.PCM);
 performAPT.setMuteAudio(false);
-performAPT.setCorrelationID(CorrelationIdGenerator.generateId());
 
 proxy.sendRPCRequest(performAPT);
 ```
@@ -78,7 +77,6 @@ Audio Capture can be ended in 4 ways:
 
 ```java
 EndAudioPassThru endAPT = new EndAudioPassThru();
-endAPT.setCorrelationID(CorrelationIdGenerator.generateId());
 proxy.sendRPCRequest(endAPT);
 ```
 

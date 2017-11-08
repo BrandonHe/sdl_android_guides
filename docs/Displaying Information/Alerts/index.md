@@ -41,7 +41,6 @@ alert.setPlayTone(true);
 alert.setSoftButtons(softButtons); // softButtons populated elsewhere
 
 // Send alert
-alert.setCorrelationID(CorrelationIdGenerator.generateId());
 proxy.sendRPCRequest(alert);
 ```
 

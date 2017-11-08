@@ -38,7 +38,6 @@ AddSubMenu addSubMenu = new AddSubMenu();
 addSubMenu.setPosition(0);
 addSubMenu.setMenuID(unique_id);
 addSubMenu.setMenuName("SubMenu");
-addSubMenu.setCorrelationID(CorrelationIdGenerator.generateId());
 addSubMenu.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -60,7 +59,6 @@ int cmdID_to_delete = 1;
 
 DeleteCommand deleteCommand = new DeleteCommand();
 deleteCommand.setCmdID(cmdID_to_delete);
-deleteCommand.setCorrelationID(CorrelationIdGenerator.generateId());
     
 proxy.sendRPCRequest(deleteCommand);
 ```
@@ -70,8 +68,7 @@ Use the menuID to tell the SDLCore which item to delete using the `DeleteSubMenu
 
 ```java
 DeleteSubMenu deleteSubMenu = new DeleteSubMenu();
-deleteSubMenu.setMenuID(submenuID_to_delete); // Replace with submenu ID to delete                   
-deleteSubMenu.setCorrelationID(CorrelationIdGenerator.generateId());
+deleteSubMenu.setMenuID(submenuID_to_delete); // Replace with submenu ID to delete
 ```  
 
 ### Custom Menus
@@ -89,13 +86,13 @@ CreateInteractionChoiceSet choiceSet = new CreateInteractionChoiceSet();
 Choice choice = new Choice();
 choice.setChoiceID(uniqueChoiceID);
 choice.setMenuName("ChoiceA");
+choice.setVrCommands(Arrays.asList("ChoiceA"));
 	
 List<Choice> choiceList = new ArrayList<>();
 choiceList.add(choice);
 	
 choiceSet.setChoiceSet(choiceList);
 choiceSet.setInteractionChoiceSetID(uniqueIntChoiceSetID);
-choiceSet.setCorrelationID(CorrelationIdGenerator.generateId());
 choiceSet.setOnRPCResponseListener(new OnRPCResponseListener() {
 @Override
 public void onResponse(int correlationId, RPCResponse response) {
@@ -192,7 +189,6 @@ performInteraction.setTimeout(30000); // 30 seconds
 #### Send the Request
 
 ```java
-performInteraction.setCorrelationID(CorrelationIdGenerator.generateId());
 performInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -219,7 +215,6 @@ If the information in the menu is dynamic, then the old interaction choice set n
 ```java
 DeleteInteractionChoiceSet deleteInteractionChoiceSet = new DeleteInteractionChoiceSet();
 deleteInteractionChoiceSet.setInteractionChoiceSetID(interactionChoiceSetID_to_delete); // Replace with interaction choice set to delete
-deleteInteractionChoiceSet.setCorrelationID(CorrelationIdGenerator.generateId());
     
 proxy.sendRPCRequest(deleteInteractionChoiceSet);
 ```

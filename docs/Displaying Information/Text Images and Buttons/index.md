@@ -10,7 +10,6 @@ show.setMainField1("Hello, this is MainField1.");
 show.setMainField2("Hello, this is MainField2.");
 show.setMainField3("Hello, this is MainField3.");
 show.setMainField4("Hello, this is MainField4.");
-show.setCorrelationID(CorrelationIdGenerator.generateId());
 show.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -87,7 +86,6 @@ softButtons.add(cancelButton);
 
 Show show = new Show();
 show.setSoftButtons(softButtons);
-show.setCorrelationID(CorrelationIdGenerator.generateId());
 show.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -123,7 +121,6 @@ You can subscribe to buttons using the `SubscribeButton` RPC.
 ```java
 SubscribeButton subscribeButtonRequest = new SubscribeButton();
 subscribeButtonRequest.setButtonName(ButtonName.SEEKRIGHT);
-subscribeButtonRequest.setCorrelationID(CorrelationIdGenerator.generateId());
 proxy.sendRPCRequest(subscribeButtonRequest);
 ```
 

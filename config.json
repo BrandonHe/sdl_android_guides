@@ -10,6 +10,9 @@
             "name": "Getting Started",
             "navigation": [
                 {
+                    "name" : "Compiling with Gradle"
+                },
+                {
                     "name" : "Upgrading to Multiplexing"
                 },
                 {
@@ -62,11 +65,31 @@
         },
 
         {
+            "name": "Mobile Navigation",
+            "navigation" : [
+              {
+                  "name": "Introduction"
+              },
+              {
+                  "name": "Video Streaming"
+              }
+            ]
+        },
+
+        {
             "name": "Setting Security Level for Multiplexing"
         },
 
         {
             "name": "Handling Language Change"
+        },
+
+        {
+            "name": "System Capability Manager"
+        },
+
+        {
+            "name": "Remote Control"
         },
 
         {
@@ -113,7 +136,7 @@
                 },
                 {
                     "name" : "Show"
-                }, 
+                },
                 {
                     "name" : "SubscribeButton"
                 },
@@ -173,8 +196,8 @@
                 }
 
             ]
-        }, 
-        
+        },
+
 	{
 	}
     ]
