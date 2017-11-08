@@ -86,6 +86,7 @@ CreateInteractionChoiceSet choiceSet = new CreateInteractionChoiceSet();
 Choice choice = new Choice();
 choice.setChoiceID(uniqueChoiceID);
 choice.setMenuName("ChoiceA");
+choice.setVrCommands(Arrays.asList("ChoiceA"));
 	
 List<Choice> choiceList = new ArrayList<>();
 choiceList.add(choice);
