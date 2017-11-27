@@ -16,8 +16,8 @@ It is recommended that you extend this as a local class within the service that 
 Extending this class gives developers a familiar, native experience to handling layouts and events on screen.
 
 ```java
-public static class MyPresentation extends SdlRemoteDisplay{
-    public MyPresentation(Context context, Display display) {
+public static class MyDisplay extends SdlRemoteDisplay{
+    public MyDisplay(Context context, Display display) {
         super(context, display);
     }
 
