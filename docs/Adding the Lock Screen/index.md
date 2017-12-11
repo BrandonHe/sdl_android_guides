@@ -1,55 +1,94 @@
 # Adding the Lock Screen
 
-In order for your SDL application to be certified with most OEMs you will be required to implement a lock screen on the mobile device. The lock screen will disable user interactions with the application while they are using the head-unit to control application functionality. The URL for the lock screen image to display is send by the head-unit.
+In order for your SDL application to be certified with most OEMs you will be required to implement a lock screen on the mobile device. The lock screen will disable user interactions with the application while they are using the head-unit to control application functionality. The URL for the default lock screen image to display is sent by the head-unit.
 
 !!! NOTE
 This guide assumes that you have an SDL Service implemented as defined in the [Getting Started](/guides/android/getting-started/) guide.
 !!!
 
+
 ## Lock Screen Activity
 
-First, we need to create a new activity that will host our lock screen. In the activity we add a simple [BroadcastReceiver](https://developer.android.com/reference/android/content/BroadcastReceiver.html) that listens for `CLOSE_LOCK_SCREEN_ACTION` intents. In the broadcast receiver we will then call [finish()](https://developer.android.com/reference/android/app/Activity.html#finish()) in order to shutdown the activity. We also check for a Bitmap extra, `LOCKSCREEN_BITMAP_EXTRA`, in the intent that started the activity:
+
+First, we need to create a new activity, LockScreenActivity, that will host our lock screen. In this activity, we have a static method to register the activity life cycles:
 
 ```java
-public class LockScreenActivity extends Activity {
-    public static final String LOCKSCREEN_BITMAP_EXTRA = "LOCKSCREEN_BITMAP_EXTRA";
-    public static final String CLOSE_LOCK_SCREEN_ACTION = "CLOSE_LOCK_SCREEN";
+public static void registerActivityLifecycle(Application application) {
+        // register only once
+        if (ACTIVITY_LIFECYCLE_REGISTERED == false) {
+            ACTIVITY_LIFECYCLE_REGISTERED = true;
 
-    private final BroadcastReceiver closeLockScreenBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            finish();
-        }
-    };
+            // check if API level is >= 14
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                // create the callback
+                ACTIVITY_LIFECYCLE_CALLBACK = new ActivityLifecycleCallbacks() {
+                    @Override
+                    public void onActivityResumed(Activity activity) {
+                        ACTIVITY_RUNNING = true;
+                        // recall this method so the lock screen comes up when necessary
+                        updateLockScreenStatus(LOCKSCREEN_STATUS);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+                        ImageView lockscreenIV = (ImageView) activity.findViewById(R.id.lockscreen);
+                        if(lockscreenIcon != null && lockscreenIV != null) {
+                            lockscreenIV.setImageBitmap(lockscreenIcon);
+                            lockscreenIcon = null;
+                        }
+                    }
 
-        registerReceiver(closeLockScreenBroadcastReceiver, new IntentFilter(CLOSE_LOCK_SCREEN_ACTION));
+                    @Override
+                    public void onActivityPaused(Activity activity) {
+                        ACTIVITY_RUNNING = false;
+                    }
+				//other callback methods . . .
+                    
+                };
 
-        setContentView(R.layout.activity_lock_screen);
+                APPLICATION = application;
 
-        Intent intent = getIntent();
-        ImageView imageView = (ImageView) findViewById(R.id.lockscreen);
-
-        if(intent.hasExtra(LOCKSCREEN_BITMAP_EXTRA)){
-            Bitmap lockscreen = (Bitmap) intent.getParcelableExtra(LOCKSCREEN_BITMAP_EXTRA);
-            if(lockscreen != null){
-                imageView.setImageBitmap(lockscreen);
+                // do the activity registration
+                application.registerActivityLifecycleCallbacks(ACTIVITY_LIFECYCLE_CALLBACK);
+            } else {
+                // fallback and assume we always have an activity
+                ACTIVITY_RUNNING = true;
             }
         }
     }
+```
+
+
+The Application class will register the activity life cycles upon application start:
+
+```java
+public class SdlApplication extends Application{
+
+    private static final String TAG = SdlApplication.class.getSimpleName();
 
     @Override
-    protected void onDestroy() {
-        unregisterReceiver(closeLockScreenBroadcastReceiver);
-        super.onDestroy();
+    public void onCreate() {
+        super.onCreate();
+        LockScreenActivity.registerActivityLifecycle(this);
     }
 }
 ```
 
-When the activity is created it will generate a layout file to use. We updated this layout to display a default sample image from `res/drawable` in the middle of the screen:
+
+Here is the onCreate method of the LockScreenActivity class:
+
+```java
+@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_lock_screen);
+
+        LOCKSCREEN_INSTANCE = this;
+
+        // redo the checkup
+        updateLockScreenStatus(LOCKSCREEN_STATUS);
+    }
+```
+
+
+And the companion activity_lock_screen.xml file:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -62,10 +101,21 @@ When the activity is created it will generate a layout file to use. We updated t
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/sample_lock" <!-- Replace with your own default image -->
+        android:contentDescription="@string/hello_world"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/sample_lock"
         android:id="@+id/lockscreen"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="@string/hello_world"/>
 </LinearLayout>
 ```
+
 
 In our AndroidManifest we need to define the style and launch mode for our lock screen activity. The theme is set to `@android:style/Theme.Black.NoTitleBar.Fullscreen` and the launch mode is set to [singleInstance](https://developer.android.com/guide/topics/manifest/activity-element.html#lmode):
 
@@ -88,12 +138,14 @@ In our AndroidManifest we need to define the style and launch mode for our lock 
             android:launchMode="singleInstance"/>
             
     </application>
-
 </manifest>
 ```
 
+
+The LockScreenActivity class is included in the [hello_sdl_android](https://github.com/smartdevicelink/hello_sdl_android) project.
+
 ## Updating SDL Service
-To fully implement a lock screen, you'll want to add a LockScreenManager as a member of your Service.
+To fully implement a lock screen, you'll want to add a LockScreenManager class as a member of your Service.
 
 ```java
 public class SdlService extends Service implements IProxyListenerALM{
@@ -104,7 +156,8 @@ public class SdlService extends Service implements IProxyListenerALM{
 	//...
 ```
 
-The LockScreenManager can download and hold a lock screen Bitmap given a URL and a class that implements its callbacks. You can create a class similar to this:
+
+The LockScreenManager class can download and hold a lock screen Bitmap given a URL and a class that implements its callbacks. You can create a class similar to this:
 
 ```java
 private class LockScreenDownloadedListener implements LockScreenManager.OnLockScreenIconDownloadedListener{
@@ -121,7 +174,9 @@ private class LockScreenDownloadedListener implements LockScreenManager.OnLockSc
 }
 ```
 
-You should prepare to accept and download the lock screen image from the URL sent by the head-unit in the `onOnSystemRequest` callback. 
+
+You should prepare to accept and download the lock screen image from the URL sent by the head-unit in the `onOnSystemRequest` callback (if no customized lock screen image is provided. this will be the image shown on the lock screen, see Customize Your Lock Screen Image section below): 
+
 
 ```java
 public void onOnSystemRequest(OnSystemRequest notification) {
@@ -133,22 +188,39 @@ public void onOnSystemRequest(OnSystemRequest notification) {
 	}
 ```
 
-Now that our lock screen activity and manager are setup, all we have to do is handle starting and stopping the activity. In the `onOnLockScreenNotification` we need to trigger the lock screen to be displayed with the HMI Level is set to FULL and when the lock screen status is required. If available, we also need to pass along the Bitmap for the lock screen image. To finish, we need to close the lock screen when the the lock screen status is OFF:
+
+## Customize Your Lock Screen Image:
+
+Besides replacing the `android:src=“drawable/sample_lock` field in `activity_lock_screen.xml` with a local image, you can manually set your local custom image for the lock screen by using the static method updateLockScreenImage of LockScreenActivity:
 
 ```java
-@Override
-public void onOnLockScreenNotification(OnLockScreenStatus notification) {
-		if(notification.getHMILevel() == HMILevel.HMI_FULL && notification.getShowLockScreen() == LockScreenStatus.REQUIRED) {
-			Intent showLockScreenIntent = new Intent(this, LockScreenActivity.class);
-			showLockScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			if(lockScreenManager.getLockScreenIcon() != null){
-				showLockScreenIntent.putExtra(LockScreenActivity.LOCKSCREEN_BITMAP_EXTRA, lockScreenManager.getLockScreenIcon());
-			}
-			startActivity(showLockScreenIntent);
-		}else if(notification.getShowLockScreen() == LockScreenStatus.OFF){
-			sendBroadcast(new Intent(LockScreenActivity.CLOSE_LOCK_SCREEN_ACTION));
-		}
-}
+public static void updateLockScreenImage(Bitmap icon){
+        lockscreenIcon = icon;
+    }
 ```
 
-Now when the HMI fully displays the application, the mobile device will display the lock screen with an image provided by the head-unit.
+
+Alternatively, you can download your custom image for the lock screen by using the downloadLockScreenIcon method of LockScreenManager:
+
+```java
+public void downloadLockScreenIcon(final String url, final OnLockScreenIconDownloadedListener l){
+        new Thread(new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    lockScreenIcon = HttpUtils.downloadImage(url);
+                    if(l != null){
+                        l.onLockScreenIconDownloaded(lockScreenIcon);
+                    }
+                }catch(IOException e){
+                    if(l != null){
+                        l.onLockScreenIconDownloadError(e);
+                    }
+                }
+            }
+        }).start();
+    }
+```
+
+
+Now when the HMI fully displays the application, the mobile device will display the lock screen with an image of your choice or a default image downloaded using the URL given by the head-unit.
