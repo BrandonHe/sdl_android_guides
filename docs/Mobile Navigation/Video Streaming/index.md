@@ -17,7 +17,7 @@ Extending this class gives developers a familiar, native experience to handling 
 
 ```java
 public static class MyDisplay extends SdlRemoteDisplay{
-    public MyPresentation(Context context, Display display) {
+    public MyDisplay(Context context, Display display) {
         super(context, display);
     }
 
