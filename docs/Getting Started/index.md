@@ -30,7 +30,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile 'com.smartdevicelink:sdl_android:{version}'
+    compile 'com.smartdevicelink:sdl_android:4.+'
 }
 ```
 
