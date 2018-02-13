@@ -85,6 +85,10 @@ public class SdlRouterService extends  com.smartdevicelink.transport.SdlRouterSe
 The local extension of the `com.smartdevicelink.transport.SdlRouterService` must be named `SdlRouterService`. 
 !!!
 
+!!! MUST
+Make sure this local class (SdlRouterService.java) is in the same package of SdlReceiver.java (described below)
+!!!
+
 If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Once added, the service needs to be defined like below:
 
 ```xml
