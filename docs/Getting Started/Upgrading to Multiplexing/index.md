@@ -89,7 +89,7 @@ The local extension of the `com.smartdevicelink.transport.SdlRouterService` must
 Make sure this local class (SdlRouterService.java) is in the same package of SdlReceiver.java (described below)
 !!!
 
-If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Once added, the service needs to be defined like below:
+If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Because we want our service to be seen by other SDL enabled apps, we need to set `android:exported="true"`. The system may issue a lint warning because of this, so we can suppress that using `tools:ignore="ExportedService"`.  Once added, it should be defined like below:
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -102,7 +102,8 @@ If you created the service using the Android Studio template then the service sh
         <service
         	android:name="com.company.mySdlApplication.SdlRouterService"
         	android:exported="true" 
-        	android:process="com.smartdevicelink.router">
+        	android:process="com.smartdevicelink.router"
+        	tools:ignore="ExportedService">
         </service>
     
     </application>
