@@ -3,7 +3,7 @@
 During navigation, it is common for directions, alerts, or warnings to be played to allow the user to make decisions safely, without requiring them to look away from the road. This will cover how navigation apps utilizing SDL can play audio snippets while streaming their app.
 
 !!! Note
-For streaming consitent audio, such as music, use a normal A2DP stream and not this method.
+For streaming consistent audio, such as music, use a normal A2DP stream and not this method.
 !!!
 
 #### Streaming Audio 
