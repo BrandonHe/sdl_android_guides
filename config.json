@@ -72,6 +72,9 @@
               },
               {
                   "name": "Video Streaming"
+              },
+              {
+                  "name": "Audio Streaming"
               }
             ]
         },

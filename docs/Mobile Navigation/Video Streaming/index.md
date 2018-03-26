@@ -56,4 +56,4 @@ public void onOnHMIStatus(OnHMIStatus notification) {
 ```
 
 ### Ending the Stream
-When the `HMIStatus` is back to `HM_NONE` it is time to stop the stream. This is accomplished through a method `stopRemoteDisplayStream()` in the `SDLProxyALM`.
+When the `HMIStatus` is back to `HMI_NONE` it is time to stop the stream. This is accomplished through a method `stopRemoteDisplayStream()` in the `SDLProxyALM`.
