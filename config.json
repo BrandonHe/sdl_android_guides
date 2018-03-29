@@ -10,6 +10,9 @@
             "name": "Getting Started",
             "navigation": [
                 {
+                    "name" : "Upgrade to 4.5"
+                },
+                {
                     "name" : "Compiling with Gradle"
                 },
                 {
