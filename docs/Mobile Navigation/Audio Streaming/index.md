@@ -1,6 +1,12 @@
 ## Audio Streaming
 
-During navigation, it is common for directions, alerts, or warnings to be played to allow the user to make decisions safely, without requiring them to look away from the road. This will cover how navigation apps utilizing SDL can play audio snippets while streaming their app.
+Navigation apps are allowed to stream raw audio to be played by the head unit. The audio received this way is played immediately, and the current audio source will be attenuated. The raw audio has to be played with the following parameters:
+
+* **Format**: PCM
+* **Sample Rate**: 16k
+* **Number of Channels**: 1
+* **Bits Per Second (BPS)**: 16 bits per sample / 2 bytes per sample
+
 
 !!! Note
 For streaming consistent audio, such as music, use a normal A2DP stream and not this method.
