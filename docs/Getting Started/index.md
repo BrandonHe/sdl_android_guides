@@ -105,6 +105,35 @@ If you created the service using the Android Studio template then the service sh
 </manifest>
 ```
 
+### Entering in the Foreground
+
+Because of Android Oreo's requirements, it is mandatory that services enter the foreground for long running tasks. The first bit of integration is ensuring that happens in the `onCreate` method of the `SdlService` or similar. Within the service that implements the SDL lifecycle you will need to add a call to start the service in the foreground. This will include creating a notification to sit in the status bar tray. This information and icons should be relevant for what the service is doing/going to do. If you already start your service in the foreground, you can ignore this section.
+
+```java
+
+public void onCreate() {
+    super.onCreate();
+    ...
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    	NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+     	notificationManager.createNotificationChannel(...);
+     	Notification serviceNotification = new Notification.Builder(this, *Notification Channel*)
+         	.setContentTitle(...)
+         	.setSmallIcon(....)
+         	.setLargeIcon(...)
+         	.setContentText(...)
+         	.setChannelId(channel.getId())
+         	.build();
+     	startForeground(id, serviceNotification);
+     }
+}
+
+```
+!!! NOTE
+The sample code checks if the OS is of Android Oreo or newer to start a foreground service. It is up to the app developer if they wish to start the notification in previous versions.  
+!!!
+
+
 ### Implementing SDL Proxy Lifecycle
 
 In order to correctly use a proxy developers need to implement methods for the proper creation and disposing of an SDL Proxy in our SDLService.
@@ -178,11 +207,37 @@ public class SdlService extends Service implements IProxyListenerALM {
 We must properly dispose of our proxy in the `onDestroy()` method because SDL will issue an error that it lost connection with the app if the connection fails before calling `proxy.dispose()`.
 !!!
 
-##SmartDeviceLink Router Service
+### Implementing IProxyListenerALM Methods
 
-The SdlRouterService will listen for a bluetooth connection with an SDL enabled module. When a connection happens, it will alert all SDL enabled apps that a connection has been established and they should start their SDL services.
+#### onOnHMIStatus()
 
-We must implement a local copy of the SdlRouterService into our project. The class doesn't need any modification, it's just important that we include it. We will extend the `com.smartdevicelink.transport.SdlRouterService` in our class named `SdlRouterService`:
+In our `SdlService`, the `onONHMIStatus()` method is where you should control your application with SDL various HMI Statuses. When you receive the first HMI_FULL, you should initialize your app on SDL by subscribing to buttons, registering addcommands, sending an initial show or speak command, etc.
+
+```java
+@Override
+public void onOnHMIStatus(OnHMIStatus notification) {
+
+    switch(notification.getHmiLevel()) {
+        case HMI_FULL:
+            //send welcome message, addcommands, subscribe to buttons ect
+            break;
+        case HMI_LIMITED:
+            break;
+        case HMI_BACKGROUND:
+            break;
+        case HMI_NONE:
+            break;
+        default:
+            return;
+    }
+}
+```
+
+## SmartDeviceLink Router Service
+
+The `SdlRouterService` will listen for a bluetooth connection with an SDL enabled module. When a connection happens, it will alert all SDL enabled apps that a connection has been established and they should start their SDL services.
+
+We must implement a local copy of the `SdlRouterService` into our project. The class doesn't need any modification, it's just important that we include it. We will extend the `com.smartdevicelink.transport.SdlRouterService` in our class named `SdlRouterService`:
 
 !!! NOTE
 Do not include an import for `com.smartdevicelink.transport.SdlRouterService`. Otherwise, we will get an error for `'SdlRouterService' is already defined in this compilation unit`.
@@ -331,6 +386,10 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 
 We want to start the SDL Proxy when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the onSdlEnabled method:
 
+!!! MUST
+Apps must start there service in the foreground as of Android Oreo (API 26).
+!!!
+
 ```java
 public class SdlReceiver extends SdlBroadcastReceiver {
    
@@ -338,8 +397,11 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 	public void onSdlEnabled(Context context, Intent intent) {
 		//Use the provided intent but set the class to the SdlService
 		intent.setClass(context, SdlService.class);
-		context.startService(intent);
-		
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+			context.startService(intent);
+		}else{
+			context.startForegroundService(intent);
+		}
 	}
 
 
@@ -372,28 +434,3 @@ public class MainActivity extends Activity {
 }
 ```
 
-### Implementing IProxyListenerALM Methods
-
-#### onOnHMIStatus()
-
-In our `SdlService`, the `onONHMIStatus()` method is where you should control your application with SDL various HMI Statuses. When you receive the first HMI_FULL, you should initialize your app on SDL by subscribing to buttons, registering addcommands, sending an initial show or speak command, etc.
-
-```java
-@Override
-public void onOnHMIStatus(OnHMIStatus notification) {
-
-    switch(notification.getHmiLevel()) {
-        case HMI_FULL:
-            //send welcome message, addcommands, subscribe to buttons ect
-            break;
-        case HMI_LIMITED:
-            break;
-        case HMI_BACKGROUND:
-            break;
-        case HMI_NONE:
-            break;
-        default:
-            return;
-    }
-}
-```
