@@ -81,14 +81,14 @@ For Remote Control to work, the head unit must support SDL Core Version 4.4 or n
 #### System Capability
 
 !!! MUST 
-Prior to using using any Remote Control RPCs, you must check that the head unit has the Remote Control capability. As you may encounter head units that do *not* support it, this check is important.
+Prior to using any Remote Control RPCs, you must check that the head unit has the Remote Control capability. As you may encounter head units that do *not* support it, this check is important.
 !!!
 
 To check for this capability, use the following call:
 
 ```java
     // First you can check to see if the capability is supported on the module
-    if (proxy.isCapabilitySupported(SystemCapabilityType.REMOTE_CONTROL){
+    if (proxy.isCapabilitySupported(SystemCapabilityType.REMOTE_CONTROL)){
 		// Since the module does support this capability we can query it for more information
 		proxy.getCapability(SystemCapabilityType.REMOTE_CONTROL, new OnSystemCapabilityListener(){
 

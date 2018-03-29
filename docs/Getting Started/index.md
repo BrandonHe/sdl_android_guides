@@ -270,7 +270,11 @@ If you created the service using the Android Studio template then the service sh
         	android:name="com.company.mySdlApplication.SdlRouterService"
         	android:exported="true" 
         	android:process="com.smartdevicelink.router"
-        	tools:ignore="ExportedService">
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.smartdevicelink.router.service"/>
+            </intent-filter>
+            <meta-data android:name="@string/sdl_router_service_version_name"  android:value="@integer/sdl_router_service_version_value" />
         </service>
     
     </application>
@@ -283,6 +287,43 @@ If you created the service using the Android Studio template then the service sh
 !!! MUST
 The `SdlRouterService` must be placed in a separate process with the name `com.smartdevicelink.router`. If it is not in that process during it's start up it will stop itself.
 !!!
+
+### Intent Filter
+
+```xml
+<intent-filter>
+    <action android:name="com.smartdevicelink.router.service"/>
+</intent-filter>
+```
+
+The new versions of the SDL Android library rely on the `com.smartdevicelink.router.service` action to query SDL enabled apps that host router services. This allows the library to determine which router service to start.
+
+!!! MUST
+This `intent-filter` MUST be included.
+!!!
+
+### Metadata
+
+#### Router Service Version
+
+```xml
+<meta-data android:name="@string/sdl_router_service_version_name"  android:value="@integer/sdl_router_service_version_value" />
+```
+
+Adding the `sdl_router_service_version` metadata allows the library to know the version of the router service that the app is using. This makes it simpler for the library to choose the newest router service when multiple router services are available.
+
+#### Custom Router Service
+
+```xml
+<meta-data android:name="@string/sdl_router_service_is_custom_name" android:value="false" />
+```
+
+!!! NOTE
+This is only for specific OEM applications, therefore normal developers do not need to worry about this.
+!!!
+
+Some OEMs choose to implement custom router services. Setting the `sdl_router_service_is_custom_name` metadata value to `true` means that the app is using something custom over the default router service that is included in the SDL Android library. Do not include this `meta-data` entry unless you know what you are doing. 
+
 
 ## SmartDeviceLink Broadcast Receiver
 
