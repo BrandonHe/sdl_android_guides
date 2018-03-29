@@ -55,7 +55,15 @@ The returned capability needs to be casted into the capability type you requeste
 
 ### Capability Lists
 
-There are currently 3 responses that come back as Lists: `AUDIO_PASSTHROUGH`, `BUTTON`, and `SOFTBUTTON`. We've created a method in the `SystemCapabilityManager` to help cast these lists. Below is an example of its usage:
+These are the current responses that come back as Lists:
+- `AUDIO_PASSTHROUGH`
+- `BUTTON`
+- `SOFTBUTTON`
+- `SPEECH`
+- `HMI_ZONE`
+- `VOICE_RECOGNITION`
+
+We've created a method in the `SystemCapabilityManager` to help cast these lists. Below is an example of its usage:
 
 
 ```java
