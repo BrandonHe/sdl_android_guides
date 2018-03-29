@@ -55,7 +55,7 @@ The returned capability needs to be casted into the capability type you requeste
 
 ### Capability Lists
 
-There are currently 3 responses that come back as Lists: 
+These are the current responses that come back as Lists:
 - `AUDIO_PASSTHROUGH`
 - `BUTTON`
 - `SOFTBUTTON`
