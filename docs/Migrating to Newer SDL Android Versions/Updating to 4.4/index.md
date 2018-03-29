@@ -1,8 +1,8 @@
 
-# Upgrading To Multiplexing
+# Updating to 4.4 (Upgrading To Multiplexing)
 
 
-Upgrading apps to utilize the new multiplexing transport flow will require us to do a few steps. This guide will assume the SDL library is already integrated into the app.
+This guide is to help developers get setup with the SDL Android library 4.4. Upgrading apps to utilize the multiplexing transport flow will require us to do a few steps. This guide will assume the SDL library is already integrated into the app.
 
 We will make changes to:
 

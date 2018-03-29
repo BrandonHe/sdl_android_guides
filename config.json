@@ -13,9 +13,6 @@
                     "name" : "Compiling with Gradle"
                 },
                 {
-                    "name" : "Upgrading to Multiplexing"
-                },
-                {
                     "name" : "Using AOA Protocol"
                 },
                 {
@@ -99,6 +96,18 @@
 
         {
             "name": "Remote Control"
+        },
+        {
+            "name": "Migrating to Newer SDL Android Versions",
+            "navigation" : [
+              {
+                  "name": "Updating to 4.4"
+              },
+              {
+                  "name": "Updating to 4.5"
+              }
+            ]
+
         },
 
         {
