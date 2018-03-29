@@ -211,7 +211,7 @@ We must properly dispose of our proxy in the `onDestroy()` method because SDL wi
 
 #### onOnHMIStatus()
 
-In our `SdlService`, the `onONHMIStatus()` method is where you should control your application with SDL various HMI Statuses. When you receive the first HMI_FULL, you should initialize your app on SDL by subscribing to buttons, registering addcommands, sending an initial show or speak command, etc.
+In our `SdlService`, the `onOnHMIStatus()` method is where you should control your application with SDL various HMI Statuses. When you receive the first HMI_FULL, you should initialize your app on SDL by subscribing to buttons, registering addcommands, sending an initial show or speak command, etc.
 
 ```java
 @Override
@@ -387,7 +387,7 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 We want to start the SDL Proxy when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the onSdlEnabled method:
 
 !!! MUST
-Apps must start there service in the foreground as of Android Oreo (API 26).
+Apps must start their service in the foreground as of Android Oreo (API 26).
 !!!
 
 ```java
