@@ -142,6 +142,24 @@ public void onCreate() {
 
 ```
 
+#### Exiting the Foreground
+
+It's important that you don't leave you notification in the notification tray as it is very confusing to users. So in the `onDestroy` method in your service, simply call the `stopForeground` method.
+
+```java
+@Override
+public void onDestroy(){
+    //...
+	if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		if(notificationManager!=null){ //If this is the only notification on your channel
+			notificationManager.deleteNotificationChannel(* Notification Channel*);
+		}
+		stopForeground(true);
+	}
+}
+```
+
 ### Notification Suggestions
 
 We realize that pushing a notification to the notification tray is not ideal for any apps, but with Android's push for more transparency to users it's important that we don't try to workaround that. Android is getting stricter with their guidelines and could potentially prevent apps from being released if they are found to be not adhering to these rules. 

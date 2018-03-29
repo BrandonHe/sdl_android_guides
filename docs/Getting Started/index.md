@@ -133,6 +133,23 @@ public void onCreate() {
 The sample code checks if the OS is of Android Oreo or newer to start a foreground service. It is up to the app developer if they wish to start the notification in previous versions.  
 !!!
 
+### Exiting the Foreground
+
+It's important that you don't leave you notification in the notification tray as it is very confusing to users. So in the `onDestroy` method in your service, simply call the `stopForeground` method.
+
+```java
+@Override
+public void onDestroy(){
+    //...
+	if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		if(notificationManager!=null){ //If this is the only notification on your channel
+			notificationManager.deleteNotificationChannel(* Notification Channel*);
+		}
+		stopForeground(true);
+	}
+}
+```
 
 ### Implementing SDL Proxy Lifecycle
 
