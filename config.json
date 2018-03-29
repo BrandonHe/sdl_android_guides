@@ -72,6 +72,9 @@
               },
               {
                   "name": "Video Streaming"
+              },
+              {
+                  "name": "Supporting Haptic Input"
               }
             ]
         },
