@@ -105,7 +105,7 @@ If you created the service using the Android Studio template then the service sh
 </manifest>
 ```
 
-### Entering in the Foreground
+### Entering the Foreground
 
 Because of Android Oreo's requirements, it is mandatory that services enter the foreground for long running tasks. The first bit of integration is ensuring that happens in the `onCreate` method of the `SdlService` or similar. Within the service that implements the SDL lifecycle you will need to add a call to start the service in the foreground. This will include creating a notification to sit in the status bar tray. This information and icons should be relevant for what the service is doing/going to do. If you already start your service in the foreground, you can ignore this section.
 
