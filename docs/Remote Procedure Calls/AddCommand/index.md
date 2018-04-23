@@ -40,7 +40,7 @@ HMILevel needs to be FULL, LIMITED, or BACKGROUND.
 
 ## Request
 **Parameter List**
-<table border="1" rules="all">
+<table>
  <tr>
    <th>Param Name</th>
    <th>Type</th>
@@ -101,12 +101,12 @@ Non-default Result Codes:
 - UNSUPPORTED_RESOURCE
 - DISALLOWED
 
-### Related Operations 
+### Related Operations
 - DeleteCommand
 - AddSubMenu
 - DeleteSubMenu
 
-### Example Function Call 
+### Example Function Call
 ```java
 commandReq = RPCRequestFactory.buildAddCommand(100, "Skip", new Vector<String>(Arrays.asList(new String[] {"Skip"})), autoIncCorrID++);
 _sdlProxy.sendRPCRequest(commandReq);
