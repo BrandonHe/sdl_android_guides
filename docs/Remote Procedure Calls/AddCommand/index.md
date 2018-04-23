@@ -39,7 +39,7 @@ There are a few other noteworthy consequences of MenuParams for a given command:
 HMILevel needs to be FULL, LIMITED, or BACKGROUND.
 
 ## Request
-**Parameter List**
+**Parameter List NS**
 <table>
  <tr>
    <th>Param Name</th>
