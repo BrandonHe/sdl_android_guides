@@ -33,6 +33,9 @@ public static class MyDisplay extends SdlRemoteDisplay{
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Log.d(TAG, "Received motion event for button1");
+                
+                // Return true if you want to consume the touch event, or false to pass it on to the parent view
+                return true;
             }
         });
     }
