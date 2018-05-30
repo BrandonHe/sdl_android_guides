@@ -1,4 +1,4 @@
-#ChangeRegistration
+# ChangeRegistration
 
 If the app recognizes during the app registration that the SDL HMI language (voice/TTS and/or display) does not match the app language, the app will be able (but does not need) to change this registration with changeRegistration prior to app being brought into focus.
 
@@ -71,16 +71,17 @@ HMILevel any.
 ### Response ###
 
 ### Non-default Result Codes: ###
-
-	- SUCCESS
-	- INVALID_DATA
-	- OUT_OF_MEMORY
-	- TOO_MANY_PENDING_REQUESTS
-	- APPLICATION_NOT_REGISTERED
-	- GENERIC_ERROR
-	- REJECTED  
-	- DISALLOWED
-
+```
+- SUCCESS
+- INVALID_DATA
+- OUT_OF_MEMORY
+- TOO_MANY_PENDING_REQUESTS
+- APPLICATION_NOT_REGISTERED
+- GENERIC_ERROR
+- REJECTED  
+- DISALLOWED
+```
 ### Related Operations ###
-
-* RegisterAppInterface
+```
+RegisterAppInterface
+```
